@@ -64,7 +64,7 @@ app.use(PREFIX + '/studyPlans', studyPlansRouter);
 
 const sessionsRouter = express.Router();
 
-sessionsRouter.post('/',
+sessionsRouter.post('',
   body('username').isEmail(),
   body('password').isString(),
   function (req, res, next) {
