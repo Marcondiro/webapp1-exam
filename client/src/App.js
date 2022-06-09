@@ -7,12 +7,14 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoginPage from './components/loginComponents';
 import { MainPage } from './components/mainPage';
-import { login, logout, getCourses } from './api';
-import { Col } from 'react-bootstrap';
+import { login, logout, getCourses, getStudyPlan } from './api';
+import { StudyPlan } from './components/studyPlanComponents';
 
 function App() {
   const [user, setUser] = useState(null);
   const [courses, setCourses] = useState([]);
+  const [studyPlan, setStudyPlan] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     async function getAndSetCourses() {
@@ -26,13 +28,30 @@ function App() {
     getAndSetCourses();
   }, [setCourses]);
 
+  useEffect(() => {
+    async function getAndSetStudyPlan() {
+      try {
+        const studyPlan = await getStudyPlan(user);
+        setStudyPlan(studyPlan);
+      } catch (e) {
+        // TODO show error message
+      }
+    };
+    if (user)
+      getAndSetStudyPlan();
+  }, [user, setStudyPlan]);
+
   return <div className="App">
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage logout={user ? () => logout(user) : undefined} courses={courses} />}>
           <Route path="courses" element={null} />
           <Route path="studyPlan/:studentId"
-            element={user ? <Col>studyPlan</Col> : <Navigate to='/login' />} />
+            element={user ?
+              <StudyPlan studyPlan={studyPlan} setStudyPlan={setStudyPlan}
+                editMode={editMode} setEditMode={setEditMode} /> :
+              <Navigate to='/login' />
+            } />
           <Route index element={<Navigate to='/courses' />} />
         </Route>
         <Route path="login" element={<LoginPage setUser={setUser} login={login} />} />

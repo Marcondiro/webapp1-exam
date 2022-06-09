@@ -33,23 +33,21 @@ function LoginForm(props) {
     }
   };
 
-  return (
-    <Form onSubmit={login}>
-      <Form.Group controlId='username' className="mb-3">
-        <Form.Label className='label'>Email</Form.Label>
-        <Form.Control className="form-control" type='email' value={username}
-          onChange={e => setUsername(e.target.value)} required={true} />
-      </Form.Group>
+  return <Form onSubmit={login}>
+    <Form.Group controlId='username' className="mb-3">
+      <Form.Label className='label'>Email</Form.Label>
+      <Form.Control className="form-control" type='email' value={username}
+        onChange={e => setUsername(e.target.value)} required={true} />
+    </Form.Group>
 
-      <Form.Group controlId='password' className="mb-3">
-        <Form.Label className='label'>Password</Form.Label>
-        <Form.Control className="form-control" type='password' value={password}
-          onChange={e => setPassword(e.target.value)} required={true} />
-      </Form.Group>
+    <Form.Group controlId='password' className="mb-3">
+      <Form.Label className='label'>Password</Form.Label>
+      <Form.Control className="form-control" type='password' value={password}
+        onChange={e => setPassword(e.target.value)} required={true} />
+    </Form.Group>
 
-      <div className="d-grid">
-        <Button type="submit" className="btn btn-primary">Login</Button>
-      </div>
-    </Form>
-  )
+    <div className="d-grid">
+      <Button type="submit" className="btn btn-primary">Login</Button>
+    </div>
+  </Form>
 };

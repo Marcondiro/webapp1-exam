@@ -2,10 +2,6 @@ import { useState } from "react";
 import { Table } from "react-bootstrap";
 
 export default function CoursesTable(props) {
-  const toggleExpand = () => {
-
-  }
-
   return <Table className="table-hover">
     <thead>
       <tr>
@@ -17,7 +13,7 @@ export default function CoursesTable(props) {
       </tr>
     </thead>
     <tbody>
-      {props.courses.map(c =>
+      {[...props.courses].sort((a, b) => a.name.localeCompare(b.name)).map(c =>
         <CourseRow key={c.code} {...c} />
       )}
     </tbody>
@@ -29,8 +25,12 @@ function CourseRow(props) {
 
   return <>
     <tr className={expanded ? 'course-expanded' : ''}>
-      <td onClick={() => setExpanded(!expanded)}>
-        <button className="unstyled">{expanded ? "﹣" : "＋"}</button>
+      <td>
+        {(props.preparatoryCourse || props.incompatibleCourses.length > 0) &&
+          <button className="unstyled" onClick={() => setExpanded(!expanded)}>
+            {expanded ? "﹣" : "＋"}
+          </button>
+        }
       </td>
       <th scope="row">{props.code}</th>
       <td>{props.name}</td>

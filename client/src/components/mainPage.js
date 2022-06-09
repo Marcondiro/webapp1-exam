@@ -1,7 +1,6 @@
 import StudyPlanNavbar from './studyPlanNavbar';
 
 import { Outlet } from 'react-router-dom';
-import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import CoursesTable from './coursesTable';
 
@@ -14,6 +13,7 @@ function MainPage(props) {
       <Container>
         <Row>
           <Col>
+            <h2>Courses</h2>
             <CoursesTable courses={props.courses} />
           </Col>
           <Outlet />
@@ -23,12 +23,7 @@ function MainPage(props) {
   </>
 }
 
-function StudyPlan(props) {
-  const [editMode, setEditMode] = useState(false);
-
-}
-
-export { MainPage, StudyPlan };
+export { MainPage };
 
 //className="col-md-9 col-12 below-nav"
 

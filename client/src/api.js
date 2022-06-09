@@ -10,8 +10,7 @@ const login = async (credentials) => {
   if (response.ok) {
     const user = await response.json();
     return user;
-  }
-  else {
+  } else {
     const errDetails = await response.text();
     throw errDetails;
   }
@@ -32,11 +31,26 @@ const getCourses = async () => {
   if (response.ok) {
     const courses = await response.json();
     return courses;
-  }
-  else {
+  } else {
     const errDetails = await response.text();
     throw errDetails;
   }
 };
 
-export { login, logout, getCourses };
+const getStudyPlan = async (user) => {
+  const response = await fetch(APIURL + '/studyPlan/' + user.id, {
+    method: 'GET',
+    credentials: 'include'
+  });
+  if (response.ok) {
+    const courses = await response.json();
+    return courses;
+  } else if (response.status === 404) {
+    return null;
+  } else {
+    const errDetails = await response.text();
+    throw errDetails;
+  }
+};
+
+export { login, logout, getCourses, getStudyPlan };
