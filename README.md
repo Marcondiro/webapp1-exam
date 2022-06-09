@@ -140,3 +140,9 @@ Perform the login.
 
 - username, password (plus any other requested info)
 - username, password (plus any other requested info)
+
+- s123456@studenti.polito.it, password
+- marco.cavenati@studenti.polito.it, 🤐
+- foo@bar.com, password
+- john.doe@polito.it, password
+- test@email.com, password
