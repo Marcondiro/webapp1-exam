@@ -11,8 +11,8 @@ const session = require('express-session');
 const dao = require('./dao');
 
 //Routes
-const coursesRouter = require('./routes/courses');
-const studyPlansRouter = require('./routes/studyPlans');
+const coursesRouter = require('./routes/coursesRoute');
+const studyPlansRouter = require('./routes/studyPlansRoute');
 
 const PORT = 3001;
 const PREFIX = '/api/v1';
