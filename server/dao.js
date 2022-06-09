@@ -28,7 +28,7 @@ async function getCourses() {
   return courses.map(c => {
     return {
       ...c,
-      incompatibleCourses: incompatibilities.filter(i => i.courseCode === c.code)
+      incompatibleCourses: incompatibilities.filter(i => i.courseCode1 === c.code).map(i => i.courseCode2)
     }
   })
 }
@@ -82,9 +82,8 @@ async function createStudyPlanEntries(student, courses) {
       const sql = 'INSERT INTO studyPlan (studentId, courseCode) VALUES (?, ?)';
       db.run(sql, [student.id, c], err => err ? reject(err) : resolve(null));
     }));
-  for (const eq of entriesQueries) {
-    await eq;
-  };
+
+  await Promise.all(entriesQueries);
 }
 
 // delte all the courses in the study plan

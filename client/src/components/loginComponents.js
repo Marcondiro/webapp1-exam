@@ -26,7 +26,7 @@ function LoginForm(props) {
     try {
       const user = await props.login(credentials);
       props.setUser(user);
-      navigate('/');
+      navigate(`/studyPlan/${user.id}`);
     } catch (e) {
       //TODO show error message
       console.error(e);
