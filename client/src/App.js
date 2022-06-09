@@ -2,12 +2,12 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-import { } from 'react-bootstrap';
 import { useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoginPage from './components/loginComponents';
-import { login } from './api';
+import MainPage from './components/mainPage';
+import { login, logout } from './api';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -15,10 +15,14 @@ function App() {
   return <div className="App">
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage setUser={setUser} login={ login } />} />
-        <Route path="/courses" element={<div>I corsi dell'università!</div>} />
-        <Route path="/studyPlan/:studentId" element={user ? <div>Ciao studente</div> : <Navigate to='/login' />} />
-        <Route path="*" element={user ? <Navigate to={`/studyPlan/${user.id}`} /> : <Navigate to='/courses' />} />
+        <Route path="/" element={<MainPage logout={user ? () => logout(user) : undefined} />}>
+          <Route path="courses" element={<>courses table</>} />
+          <Route path="studyPlan/:studentId"
+            element={user ? <p>studyPlan</p> : <Navigate to='/login' />} />
+          <Route index element={<Navigate to='/courses' />} />
+        </Route>
+        <Route path="login" element={<LoginPage setUser={setUser} login={login} />} />
+        <Route path="*" element={<Navigate to='/courses' />} />
       </Routes>
     </BrowserRouter>
   </div>

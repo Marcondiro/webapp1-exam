@@ -20,7 +20,7 @@ function LoginForm(props) {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  const login = async (event) => {
     event.preventDefault();
     const credentials = { username, password };
     try {
@@ -29,12 +29,12 @@ function LoginForm(props) {
       navigate('/');
     } catch (e) {
       //TODO show error message
-      console.log(e);
+      console.error(e);
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={login}>
       <Form.Group controlId='username' className="mb-3">
         <Form.Label className='label'>Email</Form.Label>
         <Form.Control className="form-control" type='email' value={username}
