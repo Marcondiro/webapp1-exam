@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Col, Form, Table } from "react-bootstrap";
-import { canSubmit, creditsRange } from "../studyPlan-utils";
+import { canRemoveCourse, canSubmit, creditsRange } from "../studyPlan-utils";
 
 function StudyPlan(props) {
   const { studyPlan, setStudyPlan, setEditMode } = props;
@@ -47,6 +47,7 @@ function StudyPlanTable(props) {
           <StudyPlanRow key={spCourse}
             course={courses.find(c => c.code === spCourse)}
             editMode={editMode}
+            canRemove={() => canRemoveCourse(spCourse, studyPlan, courses)}
             removeCourse={() => removeCourse(spCourse)}
           />
         )}
@@ -62,7 +63,7 @@ function StudyPlanTable(props) {
             </> :
             <>
               <Button onClick={() => setEditMode(true)} >Edit</Button>
-              <Button onClick={flushStudyPlan}>Delte</Button>
+              <Button onClick={flushStudyPlan}>Delete</Button>
             </>
           }
         </td></tr>
@@ -72,13 +73,15 @@ function StudyPlanTable(props) {
 }
 
 function StudyPlanRow(props) {
-  const { course, removeCourse } = props;
+  const { course, canRemove, removeCourse } = props;
   return <tr>
     <td>{course.code}</td>
     <td>{course.name}</td>
     <td>{course.credits}</td>
     {props.editMode && <td>
-      <Button className="btn-danger" onClick={removeCourse}>🗑</Button>
+      <Button className="btn-danger" onClick={removeCourse} disabled={!canRemove()}>
+        🗑
+      </Button>
     </td>}
   </tr>
 }

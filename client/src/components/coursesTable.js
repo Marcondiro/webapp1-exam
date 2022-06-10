@@ -44,7 +44,10 @@ function CourseRow(props) {
       <td>
         {(course.preparatoryCourse || course.incompatibleCourses.length > 0) &&
           <button className="unstyled" onClick={() => setExpanded(exp => !exp)}>
-            {expanded ? "﹣" : "ℹ"}
+            {expanded ?
+              <i class="bi bi-dash-circle"></i> :
+              <i class="bi bi-info-circle"></i>
+            }
           </button>
         }
       </td>

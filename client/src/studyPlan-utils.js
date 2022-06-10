@@ -41,6 +41,19 @@ function canAddCourse(course, studyPlan, courses) {
   return true;
 }
 
+function canRemoveCourse(courseCode, studyPlan, courses) {
+  const preparatories = courses
+    .filter(c => studyPlan.courses.includes(c.code))
+    .map(c => c.preparatoryCourse);
+
+  //Check preparatory courses
+  if (preparatories.includes(courseCode)) {
+    return false;
+  }
+
+  return true;
+}
+
 function canSubmit(studyPlan, courses) {
   const spCourses = courses.filter(c => studyPlan.courses.includes(c.code));
 
@@ -53,4 +66,4 @@ function canSubmit(studyPlan, courses) {
   return true;
 }
 
-export { creditsRange, canAddCourse, canSubmit }
+export { creditsRange, canAddCourse, canSubmit, canRemoveCourse }
