@@ -75,6 +75,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage
           logout={user ? () => logout(user) : undefined}
+          user={user}
           courses={courses}
           editMode={editMode}
           setStudyPlan={setStudyPlan}

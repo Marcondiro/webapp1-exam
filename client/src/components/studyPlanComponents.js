@@ -6,7 +6,6 @@ function StudyPlan(props) {
   const { studyPlan, setStudyPlan, setEditMode } = props;
 
   return <Col>
-    <h2>My study plan</h2>
     {studyPlan ?
       <StudyPlanTable {...props} /> :
       <CreateStudyPlanForm setStudyPlan={setStudyPlan} setEditMode={setEditMode} />
@@ -80,7 +79,7 @@ function StudyPlanRow(props) {
     <td>{course.credits}</td>
     {props.editMode && <td>
       <Button className="btn-danger" onClick={removeCourse} disabled={!canRemove()}>
-        🗑
+        <i className="bi bi-trash"></i>
       </Button>
     </td>}
   </tr>

@@ -46,3 +46,28 @@ button.unstyled {
   background: none;
   border: none;
 }
+
+.main-title {
+  color: white;
+  text-align: center;
+}
+
+.welcome-text {
+  color: white;
+  padding-right: 5px;
+}
+
+.navbar-icon {
+  font-size: 2rem;
+  color: white;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.full-course {
+  color: red;
+}
+
+.table-responsive {
+  max-height:90%;
+}

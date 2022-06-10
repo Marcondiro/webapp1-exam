@@ -11,7 +11,7 @@ export default function CoursesTable(props) {
     })
   }
 
-  return <Table className="table-hover">
+  return <div className="table-responsive"><Table className="table-hover">
     <thead>
       <tr>
         <th></th>
@@ -32,7 +32,7 @@ export default function CoursesTable(props) {
         />
       )}
     </tbody>
-  </Table>
+  </Table></div>
 }
 
 function CourseRow(props) {
@@ -45,8 +45,8 @@ function CourseRow(props) {
         {(course.preparatoryCourse || course.incompatibleCourses.length > 0) &&
           <button className="unstyled" onClick={() => setExpanded(exp => !exp)}>
             {expanded ?
-              <i class="bi bi-dash-circle"></i> :
-              <i class="bi bi-info-circle"></i>
+              <i className="bi bi-dash-circle"></i> :
+              <i className="bi bi-info-circle"></i>
             }
           </button>
         }
