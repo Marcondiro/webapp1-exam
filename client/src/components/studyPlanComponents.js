@@ -6,27 +6,38 @@ function StudyPlan(props) {
     <h2>My study plan</h2>
     {props.studyPlan ?
       <StudyPlanTable {...props} /> :
-      <CreateStudyPlanForm setStudyPlan={props.setStudyPlan} setEditMode={props.setEditMode}/>
+      <CreateStudyPlanForm setStudyPlan={props.setStudyPlan} setEditMode={props.setEditMode} />
     }
   </Col>
 }
 
 function StudyPlanTable(props) {
-  const { courses } = props.studyPlan;
+  const { courses } = props;
+  const spCourses = props.studyPlan.courses;
 
   return <Table className="table-hover">
     <thead>
       <tr>
         <th scope="col">Code</th>
         <th scope="col">Name</th>
+        <th scope="col">Credits</th>
       </tr>
     </thead>
     <tbody>
-      {[...courses].sort((a, b) => a.name.localeCompare(b.name)).map(c =>
-        <tr key={c.code}><td>{c} </td></tr>
+      {spCourses.map(spCourse =>
+        <StudyPlanRow key={spCourse} course={courses.find(c => c.code === spCourse)} />
       )}
     </tbody>
   </Table>
+}
+
+function StudyPlanRow(props) {
+  const { course } = props;
+  return <tr>
+    <td>{course.code}</td>
+    <td>{course.name}</td>
+    <td>{course.credits}</td>
+  </tr>
 }
 
 function CreateStudyPlanForm(props) {

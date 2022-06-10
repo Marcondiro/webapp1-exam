@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 
 export default function CoursesTable(props) {
   return <Table className="table-hover">
@@ -10,11 +10,17 @@ export default function CoursesTable(props) {
         <th scope="col">Name</th>
         <th scope="col">Credits</th>
         <th scope="col">Enrolled students</th>
+        {props.editMode && <th></th>}
       </tr>
     </thead>
     <tbody>
       {[...props.courses].sort((a, b) => a.name.localeCompare(b.name)).map(c =>
-        <CourseRow key={c.code} {...c} />
+        <CourseRow key={c.code}
+          course={c}
+          editMode={props.editMode}
+          addCourseToSP={props.addCourseToSP}
+          canAddCourse={props.canAddCourse}
+        />
       )}
     </tbody>
   </Table>
@@ -22,29 +28,33 @@ export default function CoursesTable(props) {
 
 function CourseRow(props) {
   const [expanded, setExpanded] = useState(false);
+  const { course, editMode, addCourseToSP, canAddCourse } = props;
 
   return <>
     <tr className={expanded ? 'course-expanded' : ''}>
       <td>
-        {(props.preparatoryCourse || props.incompatibleCourses.length > 0) &&
-          <button className="unstyled" onClick={() => setExpanded(!expanded)}>
-            {expanded ? "﹣" : "＋"}
+        {(course.preparatoryCourse || course.incompatibleCourses.length > 0) &&
+          <button className="unstyled" onClick={() => setExpanded(exp => !exp)}>
+            {expanded ? "﹣" : "ℹ"}
           </button>
         }
       </td>
-      <th scope="row">{props.code}</th>
-      <td>{props.name}</td>
-      <td>{props.credits}</td>
-      <td>{props.students}{props.maxStudents ? '/' + props.maxStudents : ''}</td>
+      <th scope="row">{course.code}</th>
+      <td>{course.name}</td>
+      <td>{course.credits}</td>
+      <td>{course.students}{course.maxStudents ? '/' + course.maxStudents : ''}</td>
+      {editMode && <td>
+        <Button disabled={!canAddCourse(course)} onClick={() => addCourseToSP(course.code)}>
+          Add
+        </Button>
+      </td>}
     </tr>
     <tr className={expanded ? '' : 'collapse'}>
       <td></td>
-      <td colSpan="4">
-        {props.preparatoryCourse && <p>Preparatory course: {props.preparatoryCourse}</p>}
-        {props.incompatibleCourses.length > 0 && <p>Incompatible courses: {
-          props.incompatibleCourses.map(c =>
-            `${c} `
-          )
+      <td colSpan={editMode ? "5" : "4"}>
+        {course.preparatoryCourse && <p>Preparatory course: {course.preparatoryCourse}</p>}
+        {course.incompatibleCourses.length > 0 && <p>Incompatible courses: {
+          course.incompatibleCourses.map(c => `${c} `)
         }</p>}
       </td>
     </tr>

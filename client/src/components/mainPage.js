@@ -10,11 +10,11 @@ function MainPage(props) {
       <StudyPlanNavbar logout={props.logout} />
     </header>
     <main>
-      <Container>
+      <Container fluid={true}>
         <Row>
           <Col>
             <h2>Courses</h2>
-            <CoursesTable courses={props.courses} />
+            <CoursesTable {...props} logout={undefined} />
           </Col>
           <Outlet />
         </Row>

@@ -9,12 +9,22 @@ import LoginPage from './components/loginComponents';
 import { MainPage } from './components/mainPage';
 import { login, logout, getCourses, getStudyPlan } from './api';
 import { StudyPlan } from './components/studyPlanComponents';
+import { canAddCourse } from './studyPlan-utils';
 
 function App() {
   const [user, setUser] = useState(null);
   const [courses, setCourses] = useState([]);
   const [studyPlan, setStudyPlan] = useState(null);
   const [editMode, setEditMode] = useState(false);
+
+  const addCourseToSP = (courseCode) => {
+    setStudyPlan(sp => {
+      return {
+        isPartTime: sp.isPartTime,
+        courses: [...sp.courses, courseCode],
+      }
+    })
+  }
 
   useEffect(() => {
     async function getAndSetCourses() {
@@ -44,12 +54,18 @@ function App() {
   return <div className="App">
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage logout={user ? () => logout(user) : undefined} courses={courses} />}>
+        <Route path="/" element={<MainPage
+          logout={user ? () => logout(user) : undefined}
+          courses={courses}
+          editMode={editMode}
+          addCourseToSP={addCourseToSP}
+          canAddCourse={(course) => canAddCourse(course, studyPlan, courses)}
+        />}>
           <Route path="courses" element={null} />
           <Route path="studyPlan/:studentId"
             element={user ?
               <StudyPlan studyPlan={studyPlan} setStudyPlan={setStudyPlan}
-                editMode={editMode} setEditMode={setEditMode} /> :
+                editMode={editMode} setEditMode={setEditMode} courses={courses}/> :
               <Navigate to='/login' />
             } />
           <Route index element={<Navigate to='/courses' />} />
