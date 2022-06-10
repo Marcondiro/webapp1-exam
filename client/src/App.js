@@ -47,9 +47,10 @@ function App() {
         // TODO show error message
       }
     };
-    if (user)
+    //Load study plan after login or after exiting edit mode
+    if (user && !editMode)
       getAndSetStudyPlan();
-  }, [user, setStudyPlan]);
+  }, [user, editMode, setStudyPlan]);
 
   return <div className="App">
     <BrowserRouter>
@@ -64,8 +65,10 @@ function App() {
           <Route path="courses" element={null} />
           <Route path="studyPlan/:studentId"
             element={user ?
-              <StudyPlan studyPlan={studyPlan} setStudyPlan={setStudyPlan}
-                editMode={editMode} setEditMode={setEditMode} courses={courses}/> :
+              <StudyPlan
+                studyPlan={studyPlan} setStudyPlan={setStudyPlan}
+                editMode={editMode} setEditMode={setEditMode}
+                courses={courses}/> :
               <Navigate to='/login' />
             } />
           <Route index element={<Navigate to='/courses' />} />

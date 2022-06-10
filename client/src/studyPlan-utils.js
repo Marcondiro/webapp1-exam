@@ -1,7 +1,7 @@
 const creditsRange = (isPartTime) => {
   return {
-    min: isPartTime ? 20 : 60,
-    max: isPartTime ? 40 : 80,
+    creditsMin: isPartTime ? 20 : 60,
+    creditsMax: isPartTime ? 40 : 80,
   }
 };
 
@@ -14,9 +14,9 @@ function canAddCourse(course, studyPlan, courses) {
   const spCourses = courses.filter(c => studyPlan.courses.includes(c.code));
 
   //Check total credits
-  const { max } = creditsRange(studyPlan.isPartTime);
+  const { creditsMax } = creditsRange(studyPlan.isPartTime);
   const credits = course.credits + spCourses.reduce((prev, cur) => prev + cur.credits, 0);
-  if (credits > max) {
+  if (credits > creditsMax) {
     return false;
   }
 
@@ -45,9 +45,9 @@ function canSubmit(studyPlan, courses) {
   const spCourses = courses.filter(c => studyPlan.courses.includes(c.code));
 
   //Check total credits
-  const { min, max } = creditsRange(studyPlan.isPartTime);
+  const { creditsMin, creditsMax } = creditsRange(studyPlan.isPartTime);
   const credits = spCourses.reduce((prev, cur) => prev + cur.credits, 0);
-  if (credits < min || credits > max)
+  if (credits < creditsMin || credits > creditsMax)
     return false;
 
   return true;

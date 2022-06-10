@@ -38,7 +38,7 @@ const getCourses = async () => {
 };
 
 const getStudyPlan = async (user) => {
-  const response = await fetch(APIURL + '/studyPlan/' + user.id, {
+  const response = await fetch(APIURL + '/studyPlans/' + user.id, {
     method: 'GET',
     credentials: 'include'
   });

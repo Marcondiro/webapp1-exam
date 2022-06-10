@@ -51,7 +51,7 @@ function CourseRow(props) {
     </tr>
     <tr className={expanded ? '' : 'collapse'}>
       <td></td>
-      <td colSpan={editMode ? "5" : "4"}>
+      <td colSpan={editMode ? 5 : 4}>
         {course.preparatoryCourse && <p>Preparatory course: {course.preparatoryCourse}</p>}
         {course.incompatibleCourses.length > 0 && <p>Incompatible courses: {
           course.incompatibleCourses.map(c => `${c} `)

@@ -52,7 +52,7 @@ async function getStudyPlan(student) {
     undefined :
     {
       isPartTime: Boolean(isPartTime),
-      courses: courses
+      courses: courses.map(c => c.courseCode),
     }
 }
 
