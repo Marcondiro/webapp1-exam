@@ -7,7 +7,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoginPage from './components/loginComponents';
 import { MainPage } from './components/mainPage';
-import { login, logout, getCourses, getStudyPlan, createStudyPlan } from './api';
+import { login, logout, getCourses, getStudyPlan, createStudyPlan, updateStudyPlan, deleteStudyPlan } from './api';
 import { StudyPlan } from './components/studyPlanComponents';
 import { canAddCourse } from './studyPlan-utils';
 
@@ -22,15 +22,25 @@ function App() {
   const submitStudyPlan = async () => {
     try {
       if (hasStudyPlan) {
-        // update study plan
+        await updateStudyPlan(user, studyPlan);
       } else {
         await createStudyPlan(studyPlan);
       }
       setEditMode(false);
-    } catch(err) {
+      return true;
+    } catch (err) {
       // TODO show error message
     }
-    return true;
+  }
+
+  const flushStudyPlan = async () => {
+    try {
+      await deleteStudyPlan(user);
+      setStudyPlan(null);
+      return true;
+    } catch (err) {
+      // TODO show error message
+    }
   }
 
   useEffect(() => {
@@ -50,9 +60,7 @@ function App() {
       try {
         const studyPlan = await getStudyPlan(user);
         setStudyPlan(studyPlan);
-        if (studyPlan) {
-          setHasStudyPlan(true);
-        }
+        setHasStudyPlan(Boolean(studyPlan));
       } catch (e) {
         // TODO show error message
       }
@@ -77,7 +85,7 @@ function App() {
             element={user ?
               <StudyPlan
                 studyPlan={studyPlan} setStudyPlan={setStudyPlan}
-                submitStudyPlan={submitStudyPlan}
+                submitStudyPlan={submitStudyPlan} flushStudyPlan={flushStudyPlan}
                 editMode={editMode} setEditMode={setEditMode}
                 courses={courses} /> :
               <Navigate to='/login' />

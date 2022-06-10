@@ -68,4 +68,33 @@ const createStudyPlan = async (studyPlan) => {
   }
 }
 
-export { login, logout, getCourses, getStudyPlan, createStudyPlan };
+const updateStudyPlan = async (user, studyPlan) => {
+  const response = await fetch(APIURL + `/studyPlans/${user.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(studyPlan),
+  });
+  if (response.ok) {
+    return true;
+  } else {
+    const errDetails = await response.text();
+    throw errDetails;
+  }
+}
+
+
+const deleteStudyPlan = async (user) => {
+  const response = await fetch(APIURL + '/studyPlans/' + user.id, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  if (response.ok) {
+    return true;
+  } else {
+    const errDetails = await response.text();
+    throw errDetails;
+  }
+};
+
+export { login, logout, getCourses, getStudyPlan, createStudyPlan, updateStudyPlan, deleteStudyPlan };

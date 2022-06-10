@@ -85,7 +85,7 @@ sessionsRouter.delete('/:studentId(\\d+)', isLoggedIn, (req, res) => {
       return res.status(403).json({ error: 'Forbidden' });
 
     req.logout(() => {
-      res.end();
+      res.status(205).end();
     });
   } catch (err) {
     console.error(err);

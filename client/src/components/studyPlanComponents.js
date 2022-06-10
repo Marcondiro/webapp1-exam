@@ -15,7 +15,7 @@ function StudyPlan(props) {
 }
 
 function StudyPlanTable(props) {
-  const { courses, editMode, setEditMode, studyPlan, setStudyPlan, submitStudyPlan } = props;
+  const { courses, editMode, setEditMode, studyPlan, setStudyPlan, submitStudyPlan, flushStudyPlan } = props;
   const spCourses = studyPlan.courses;
   const { creditsMin, creditsMax } = creditsRange(studyPlan.isPartTime);
   const credits = courses
@@ -62,7 +62,7 @@ function StudyPlanTable(props) {
             </> :
             <>
               <Button onClick={() => setEditMode(true)} >Edit</Button>
-              <Button onClick={() => 'TODO delte studyplan'}>Delte</Button>
+              <Button onClick={flushStudyPlan}>Delte</Button>
             </>
           }
         </td></tr>

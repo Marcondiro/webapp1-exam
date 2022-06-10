@@ -71,27 +71,32 @@ function existsStudyPlan(student) {
 function setIsPartTime(student, isPartTime) {
   return new Promise((resolve, reject) => {
     const sql = 'UPDATE student SET isPartTime=? WHERE id=?';
-    db.run(sql, [isPartTime, student.id], err => err ? reject(err) : resolve(null));
+    db.run(sql, [(isPartTime === null ? 'NULL' : isPartTime), student.id],
+      err => err ? reject(err) : resolve(null));
   });
 }
 
 // create study plan rows
-async function createStudyPlanEntries(student, courses) {
+function createStudyPlanEntries(student, courses) {
   const entriesQueries = courses.map(c =>
     new Promise((resolve, reject) => {
       const sql = 'INSERT INTO studyPlan (studentId, courseCode) VALUES (?, ?)';
       db.run(sql, [student.id, c], err => err ? reject(err) : resolve(null));
     }));
 
-  await Promise.all(entriesQueries);
+  return Promise.all(entriesQueries);
 }
 
 // delte all the courses in the study plan
 function deleteStudyPlanEntries(student) {
-  return new Promise((resolve, reject) => {
+  const entriesQuery = new Promise((resolve, reject) => {
     const sql = 'DELETE FROM studyPlan WHERE studentId=?';
     db.run(sql, [student.id], err => err ? reject(err) : resolve(null));
   });
+
+  const isPartTimeQuery = setIsPartTime(student, null);
+
+  return Promise.all([entriesQuery, isPartTimeQuery]);
 }
 
 // create a study plan for the student
