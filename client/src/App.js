@@ -7,7 +7,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoginPage from './components/loginComponents';
 import { MainPage } from './components/mainPage';
-import { login, logout, getCourses, getStudyPlan } from './api';
+import { login, logout, getCourses, getStudyPlan, createStudyPlan } from './api';
 import { StudyPlan } from './components/studyPlanComponents';
 import { canAddCourse } from './studyPlan-utils';
 
@@ -15,12 +15,21 @@ function App() {
   const [user, setUser] = useState(null);
   const [courses, setCourses] = useState([]);
   const [studyPlan, setStudyPlan] = useState(null);
+  const [hasStudyPlan, setHasStudyPlan] = useState(false);
   // TODO use context for edit mode?
   const [editMode, setEditMode] = useState(false);
 
-  const submitStudyPlan = () => {
-    // TODO
-    setEditMode(false);
+  const submitStudyPlan = async () => {
+    try {
+      if (hasStudyPlan) {
+        // update study plan
+      } else {
+        await createStudyPlan(studyPlan);
+      }
+      setEditMode(false);
+    } catch(err) {
+      // TODO show error message
+    }
     return true;
   }
 
@@ -41,6 +50,9 @@ function App() {
       try {
         const studyPlan = await getStudyPlan(user);
         setStudyPlan(studyPlan);
+        if (studyPlan) {
+          setHasStudyPlan(true);
+        }
       } catch (e) {
         // TODO show error message
       }

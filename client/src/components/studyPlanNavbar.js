@@ -5,14 +5,13 @@ export default function StudyPlanNavbar(props) {
   const navigate = useNavigate();
 
   const logout = async () => {
-    const result = await props.logout();
-    if (result)
+    try {
+      await props.logout();
+    } finally {
       //After server logout flush state and go to un-auth courses view.
       //Use location replace instead of React useNavigate() to be sure that the full state is flushed.
       window.location.replace('/');
-    else
-      return 'todo';
-    // TODO set message
+    }
   };
 
   // TODO: fix col-4, on small screens cols are less than 12

@@ -2,7 +2,7 @@
 
 const { getCourses } = require('./dao');
 
-async function StudyPlan(isPartTime, coursesCodes) {
+async function validateStudyPlan(isPartTime, coursesCodes) {
   const courses = (await getCourses()).filter(c => coursesCodes.includes(c.code));
 
   //Check total credits
@@ -27,6 +27,7 @@ async function StudyPlan(isPartTime, coursesCodes) {
   //Check preparatory courses
   const missingPreparatories = courses
     .map(course => course.preparatoryCourse)
+    .filter(preparatory => preparatory)
     .filter(preparatory => !coursesCodes.includes(preparatory));
   if (missingPreparatories.length > 0)
     throw new Error(`Preparatory course(s) ${missingPreparatories} is missing.`);
@@ -37,8 +38,6 @@ async function StudyPlan(isPartTime, coursesCodes) {
   if (fullCourses.length > 0)
     throw new Error(`Course(s) ${fullCourses} is full.`);
 
-  this.isPartTime = isPartTime;
-  this.courses = [...coursesCodes];
 }
 
-module.exports = StudyPlan;
+module.exports = validateStudyPlan;

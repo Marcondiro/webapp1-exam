@@ -19,7 +19,7 @@ const login = async (credentials) => {
 const logout = async (user) => {
   const response = await fetch(APIURL + `/sessions/${user.id}`, {
     method: 'DELETE',
-    credentials: 'include'
+    credentials: 'include',
   });
   return Boolean(response.ok);
 };
@@ -40,7 +40,7 @@ const getCourses = async () => {
 const getStudyPlan = async (user) => {
   const response = await fetch(APIURL + '/studyPlans/' + user.id, {
     method: 'GET',
-    credentials: 'include'
+    credentials: 'include',
   });
   if (response.ok) {
     const courses = await response.json();
@@ -53,4 +53,19 @@ const getStudyPlan = async (user) => {
   }
 };
 
-export { login, logout, getCourses, getStudyPlan };
+const createStudyPlan = async (studyPlan) => {
+  const response = await fetch(APIURL + '/studyPlans', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(studyPlan),
+  });
+  if (response.ok) {
+    return true;
+  } else {
+    const errDetails = await response.text();
+    throw errDetails;
+  }
+}
+
+export { login, logout, getCourses, getStudyPlan, createStudyPlan };
