@@ -15,15 +15,13 @@ function App() {
   const [user, setUser] = useState(null);
   const [courses, setCourses] = useState([]);
   const [studyPlan, setStudyPlan] = useState(null);
+  // TODO use context for edit mode?
   const [editMode, setEditMode] = useState(false);
 
-  const addCourseToSP = (courseCode) => {
-    setStudyPlan(sp => {
-      return {
-        isPartTime: sp.isPartTime,
-        courses: [...sp.courses, courseCode],
-      }
-    })
+  const submitStudyPlan = () => {
+    // TODO
+    setEditMode(false);
+    return true;
   }
 
   useEffect(() => {
@@ -59,7 +57,7 @@ function App() {
           logout={user ? () => logout(user) : undefined}
           courses={courses}
           editMode={editMode}
-          addCourseToSP={addCourseToSP}
+          setStudyPlan={setStudyPlan}
           canAddCourse={(course) => canAddCourse(course, studyPlan, courses)}
         />}>
           <Route path="courses" element={null} />
@@ -67,8 +65,9 @@ function App() {
             element={user ?
               <StudyPlan
                 studyPlan={studyPlan} setStudyPlan={setStudyPlan}
+                submitStudyPlan={submitStudyPlan}
                 editMode={editMode} setEditMode={setEditMode}
-                courses={courses}/> :
+                courses={courses} /> :
               <Navigate to='/login' />
             } />
           <Route index element={<Navigate to='/courses' />} />

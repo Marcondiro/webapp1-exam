@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Col, Form, Table } from "react-bootstrap";
-import { creditsRange } from "../studyPlan-utils";
+import { canSubmit, creditsRange } from "../studyPlan-utils";
 
 function StudyPlan(props) {
   const { studyPlan, setStudyPlan, setEditMode } = props;
@@ -15,7 +15,7 @@ function StudyPlan(props) {
 }
 
 function StudyPlanTable(props) {
-  const { courses, editMode, setEditMode, studyPlan, setStudyPlan } = props;
+  const { courses, editMode, setEditMode, studyPlan, setStudyPlan, submitStudyPlan } = props;
   const spCourses = studyPlan.courses;
   const { creditsMin, creditsMax } = creditsRange(studyPlan.isPartTime);
   const credits = courses
@@ -56,7 +56,9 @@ function StudyPlanTable(props) {
           {editMode ?
             <>
               <Button onClick={() => setEditMode(false)} >Cancel</Button>
-              <Button onClick={() => 'TODO submit studyplan'}>Submit</Button>
+              <Button disabled={!canSubmit(studyPlan, courses)} onClick={submitStudyPlan}>
+                Submit
+              </Button>
             </> :
             <>
               <Button onClick={() => setEditMode(true)} >Edit</Button>

@@ -2,6 +2,15 @@ import { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 
 export default function CoursesTable(props) {
+  const addCourseToSP = (courseCode) => {
+    props.setStudyPlan(sp => {
+      return {
+        isPartTime: sp.isPartTime,
+        courses: [...sp.courses, courseCode],
+      }
+    })
+  }
+
   return <Table className="table-hover">
     <thead>
       <tr>
@@ -18,7 +27,7 @@ export default function CoursesTable(props) {
         <CourseRow key={c.code}
           course={c}
           editMode={props.editMode}
-          addCourseToSP={props.addCourseToSP}
+          addCourseToSP={addCourseToSP}
           canAddCourse={props.canAddCourse}
         />
       )}
