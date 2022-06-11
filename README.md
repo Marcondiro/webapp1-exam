@@ -120,9 +120,10 @@ Perform the login.
 
 ## Database Tables
 
-- Table `users` - contains xx yy zz
-- Table `something` - contains ww qq ss
-- ...
+- Table `course` contains data about courses: `code, name, credits, maxStudents, preparatoryCourse`
+- Table `incompatibility` contains the incompatibilities between courses.
+- Table `student` contains data about the application users: `id, email, (password) hash, (password) salt, isPartTime, name`
+- Table `studyPlan` contains the bindings between students and courses, in other words the study plan entries: `studentId, courseCode`
 
 ## Main React Components
 
@@ -138,11 +139,9 @@ Perform the login.
 
 ## Users Credentials
 
-- username, password (plus any other requested info)
-- username, password (plus any other requested info)
-
 - s123456@studenti.polito.it, password
 - marco.cavenati@studenti.polito.it, 🤐
 - foo@bar.com, password
 - john.doe@polito.it, password
 - test@email.com, password
+- s000000@studenti.polito.it, password

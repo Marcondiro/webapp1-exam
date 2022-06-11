@@ -18,3 +18,4 @@
 - [x] reload courses after submit/delete
 - [ ] info animation
 - [ ] redesign studyPlan as a class in frontend
+- [ ] redirect if unauthorized?
