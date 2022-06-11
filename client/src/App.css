@@ -68,9 +68,10 @@ div.App {
   max-height: 100vh;
 }
 
-div {
+div.col {
   overflow-y: auto;
 }
+
 
 .main-row {
   height: calc(100vh - 72px);

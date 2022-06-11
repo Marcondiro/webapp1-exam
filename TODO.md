@@ -1,19 +1,20 @@
 - [x] add column for max students? no
 - [x] incompat/ preparatory show course name, use a list?
 - [x] display the reason of disabled add and delete button
-- [ ] meet database entries requirements
+- [x] meet database entries requirements
 - [ ] readme
 - [ ] final test undex linux
-- [x] corso al completo rosso numero studenti
-- [x] nome utente
-- [x] spazio tra buttons
+- [x] mark full course in red
+- [x] add username
+- [x] buttons margins
 - [ ] TODOs
-- [x] aggiungere titolo a part time full time
-- [x] credits nel footer
-- [x] incompatibile course non courses quando un solo corso
-- [ ] part time selector padding
-- [x] tooltip submit
-- [x] verificare has study plan
-- [x] verificare canAdd
-- [x] ricaricare courses dopo submit/delete
+- [x] add title in full-time part-time form
+- [x] move credits into footer
+- [x] change to incompatibile course (1) / incomaptible courses (>1)
+- [x] fix part time selector border cutted
+- [x] tooltip when submit is disabled
+- [x] fix has study plan
+- [x] fix canAdd
+- [x] reload courses after submit/delete
 - [ ] info animation
+- [ ] redesign studyPlan as a class in frontend

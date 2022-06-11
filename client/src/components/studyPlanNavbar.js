@@ -24,7 +24,7 @@ export default function StudyPlanNavbar(props) {
         <h1 className="d-none d-md-inline main-title">Fooniversity</h1>
       </div>
       <div className="col-4 d-flex justify-content-end align-items-center">
-        {props.user && <small className="welcome-text">{props.user.username}</small>}
+        {props.user && <small className="welcome-text">Hi, {props.user.name}</small>}
         {props.logout ?
           <Button className="btn btn-light" onClick={logout}>
             <i className="bi bi-box-arrow-right"></i> Logout

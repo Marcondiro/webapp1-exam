@@ -48,7 +48,7 @@ async function getStudyPlan(student) {
   const isPartTime = await isPartTimeQuery;
   const courses = await coursesQuery;
 
-  return isPartTime === 'NULL' ?
+  return isPartTime === null ?
     undefined :
     {
       isPartTime: Boolean(isPartTime),
@@ -62,7 +62,7 @@ function existsStudyPlan(student) {
     const sql = 'SELECT isPartTime FROM student WHERE id=?';
     db.get(sql, [student.id], (err, row) => err ?
       reject(err) :
-      resolve(row.isPartTime !== "NULL")
+      resolve(row.isPartTime !== null)
     );
   });
 }
@@ -71,7 +71,7 @@ function existsStudyPlan(student) {
 function setIsPartTime(student, isPartTime) {
   return new Promise((resolve, reject) => {
     const sql = 'UPDATE student SET isPartTime=? WHERE id=?';
-    db.run(sql, [(isPartTime === null ? 'NULL' : isPartTime), student.id],
+    db.run(sql, [isPartTime, student.id],
       err => err ? reject(err) : resolve(null));
   });
 }

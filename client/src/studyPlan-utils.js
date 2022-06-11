@@ -11,6 +11,11 @@ function canAddCourse(course, studyPlan, courses) {
     return [false, 'Already in the study plan'];
   }
 
+  //Check max number of students
+  if (course.maxStudents && course.maxStudents <= course.students) {
+    return [false, 'The course is full ☹️'];
+  }
+
   const spCourses = courses.filter(c => studyPlan.courses.includes(c.code));
 
   //Check total credits
@@ -34,11 +39,6 @@ function canAddCourse(course, studyPlan, courses) {
       false,
       `Missing preparatory course ${course.preparatoryCourse.code} ${course.preparatoryCourse.name}`
     ];
-  }
-
-  //Check max number of students
-  if (course.maxStudents && course.maxStudents <= course.students) {
-    return [false, 'The course is full ☹️'];
   }
 
   return [true, null];
