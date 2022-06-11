@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button, Col, Form, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
-import { canRemoveCourse, canSubmit, creditsRange } from "../studyPlan-utils";
+import StudyPlan from "../model/StudyPlan";
 
-function StudyPlan(props) {
+function StudyPlanView(props) {
   const { studyPlan, setStudyPlan, setEditMode } = props;
 
   return <Col>
@@ -20,18 +20,13 @@ function StudyPlanTable(props) {
   const { courses, setCourses, editMode, setEditMode, } = props;
   const { studyPlan, setStudyPlan, submitStudyPlan, flushStudyPlan, } = props;
   const spCourses = studyPlan.courses;
-  const { creditsMin, creditsMax } = creditsRange(studyPlan.isPartTime);
+  const [minCredits, maxCredits] = [studyPlan.creditsRange.min, studyPlan.creditsRange.max];
   const credits = courses
     .filter(c => spCourses.includes(c.code))
     .reduce((prev, cur) => prev + cur.credits, 0);
 
   const removeCourse = (courseCode) => {
-    setStudyPlan((sp) => {
-      return {
-        ...sp,
-        courses: sp.courses.filter(c => c !== courseCode),
-      }
-    });
+    setStudyPlan(sp => new StudyPlan(sp.isPartTime, sp.courses.filter(c => c !== courseCode)));
     setCourses(courses =>
       courses.map(c => c.code === courseCode ? { ...c, students: c.students - 1 } : c)
     )
@@ -51,7 +46,7 @@ function StudyPlanTable(props) {
         <StudyPlanRow key={spCourse}
           course={courses.find(c => c.code === spCourse)}
           editMode={editMode}
-          canRemove={() => canRemoveCourse(spCourse, studyPlan, courses)}
+          canRemove={() => studyPlan.canRemoveCourse(spCourse, courses)}
           removeCourse={() => removeCourse(spCourse)}
         />
       )}
@@ -60,7 +55,7 @@ function StudyPlanTable(props) {
       <tr>
         <td></td>
         <td><strong>Total credits</strong> / min-max credits</td>
-        <td><strong>{credits}</strong> / {creditsMin}-{creditsMax}</td>
+        <td><strong>{credits}</strong> / {minCredits}-{maxCredits}</td>
         {editMode && <td></td>}
       </tr>
       <tr><td colSpan={editMode ? 4 : 3}>
@@ -69,7 +64,7 @@ function StudyPlanTable(props) {
             <Button className="btn-secondary" onClick={() => setEditMode(false)} >
               <i className="bi bi-x-circle-fill"></i> Cancel
             </Button>
-            {canSubmit(studyPlan, courses) ?
+            {studyPlan.canSubmit(courses) ?
               <Button onClick={submitStudyPlan}>
                 <i className="bi bi-check-circle-fill"></i> Submit
               </Button> :
@@ -125,10 +120,7 @@ function CreateStudyPlanForm(props) {
 
   const submit = event => {
     event.preventDefault();
-    props.setStudyPlan({
-      isPartTime: isPartTime,
-      courses: [],
-    })
+    props.setStudyPlan(new StudyPlan(isPartTime, []));
     props.setEditMode(true);
   };
 
@@ -144,4 +136,4 @@ function CreateStudyPlanForm(props) {
   </Form>
 }
 
-export { StudyPlan }
+export { StudyPlanView }

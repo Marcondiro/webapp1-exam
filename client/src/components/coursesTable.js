@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { Button, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
+import StudyPlan from "../model/StudyPlan";
 
 export default function CoursesTable(props) {
   const addCourseToSP = (courseCode) => {
-    props.setStudyPlan(sp => {
-      return {
-        isPartTime: sp.isPartTime,
-        courses: [...sp.courses, courseCode],
-      }
-    })
+    props.setStudyPlan(sp => new StudyPlan(sp.isPartTime, [...sp.courses, courseCode]));
     props.setCourses(courses =>
       courses.map(c => c.code === courseCode ? { ...c, students: c.students + 1 } : c)
     )

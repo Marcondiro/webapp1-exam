@@ -17,5 +17,7 @@
 - [x] fix canAdd
 - [x] reload courses after submit/delete
 - [ ] info animation
-- [ ] redesign studyPlan as a class in frontend
+- [x] redesign studyPlan as a class in frontend
 - [ ] redirect if unauthorized?
+- [ ] return objects instead of arrays in can*
+- [ ] add message to canSubmit

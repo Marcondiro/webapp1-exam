@@ -8,8 +8,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import LoginPage from './components/loginComponents';
 import { MainPage } from './components/mainPage';
 import { login, logout, getCourses, getStudyPlan, createStudyPlan, updateStudyPlan, deleteStudyPlan } from './api';
-import { StudyPlan } from './components/studyPlanComponents';
-import { canAddCourse } from './studyPlan-utils';
+import { StudyPlanView } from './components/studyPlanComponents';
+import StudyPlan from './model/StudyPlan';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -62,7 +62,7 @@ function App() {
     async function getAndSetStudyPlan() {
       try {
         const studyPlan = await getStudyPlan(user);
-        setStudyPlan(studyPlan);
+        setStudyPlan(new StudyPlan(studyPlan.isPartTime, studyPlan.courses));
         setHasStudyPlan(Boolean(studyPlan));
       } catch (e) {
         // TODO show error message
@@ -82,12 +82,12 @@ function App() {
           courses={courses} setCourses={setCourses}
           editMode={editMode}
           setStudyPlan={setStudyPlan}
-          canAddCourse={(course) => canAddCourse(course, studyPlan, courses)}
+          canAddCourse={(course) => studyPlan.canAddCourse(course, courses)}
         />}>
           <Route path="courses" element={null} />
           <Route path="studyPlan/:studentId"
             element={user ?
-              <StudyPlan
+              <StudyPlanView
                 studyPlan={studyPlan} setStudyPlan={setStudyPlan}
                 submitStudyPlan={submitStudyPlan} flushStudyPlan={flushStudyPlan}
                 editMode={editMode} setEditMode={setEditMode}
