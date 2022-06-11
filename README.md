@@ -62,7 +62,7 @@ TODO
     ```
     {
         "isPartTime": true,
-        "courses": [ '02GOLOV', '01SQLOV' ]
+        "courses": [ '02GOLOV', '01SQLOV', '02LSEOV' ]
     }
     ```
 
@@ -76,7 +76,7 @@ TODO
     ```
     {
         "isPartTime": true,
-        "courses": [ '02GOLOV', '01SQLOV' ]
+        "courses": [ '02GOLOV', '01SQLOV', '02LSEOV' ]
     }
     ```
 
@@ -92,7 +92,7 @@ TODO
     ```
     {
         "isPartTime": false,
-        "courses": [ '02GOLOV', '01SQLOV' ]
+        "courses": [ '02GOLOV', '01SQLOV', '02LSEOV' ]
     }
     ```
 
