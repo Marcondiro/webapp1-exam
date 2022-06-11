@@ -1,11 +1,18 @@
-- [ ] add column for mac students?
+- [ ] add column for max students?
 - [ ] incompat/ preparatory show course name, use a list?
-- [ ] display the reason of disabled add button
+- [ ] display the reason of disabled add anc delete button
 - [ ] meet database entries requirements
 - [ ] readme
 - [ ] final test undex linux
 - [ ] corso al completo rosso numero studenti
-- [ ] nome utente
-- [ ] inizio tabella uguale
+- [x] nome utente
 - [ ] spazio tra tasti
 - [ ] TODOs
+- [ ] aggiungere titolo a part time full time
+- [x] credits nel footer
+- [x] incompatibile course non courses quando un solo corso
+- [ ] part time selector padding
+- [ ] tooltip submit
+- [x] verificare has study plan
+- [x] verificare canAdd
+- [ ] ricaricare courses dopo submit?

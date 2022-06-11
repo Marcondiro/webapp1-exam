@@ -15,6 +15,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [courses, setCourses] = useState([]);
   const [studyPlan, setStudyPlan] = useState(null);
+  //hasStudyPlan true if the user has a study plan saved in the back-end
   const [hasStudyPlan, setHasStudyPlan] = useState(false);
   // TODO use context for edit mode?
   const [editMode, setEditMode] = useState(false);
@@ -27,7 +28,10 @@ function App() {
         await createStudyPlan(studyPlan);
       }
       setEditMode(false);
-      return true;
+
+      const courses = await getCourses();
+      setCourses(courses);
+      
     } catch (err) {
       // TODO show error message
     }
@@ -36,8 +40,8 @@ function App() {
   const flushStudyPlan = async () => {
     try {
       await deleteStudyPlan(user);
+      setHasStudyPlan(false);
       setStudyPlan(null);
-      return true;
     } catch (err) {
       // TODO show error message
     }

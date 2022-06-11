@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Col, Form, Table } from "react-bootstrap";
+import { Button, Col, Form, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { canRemoveCourse, canSubmit, creditsRange } from "../studyPlan-utils";
 
 function StudyPlan(props) {
@@ -31,59 +31,72 @@ function StudyPlanTable(props) {
     });
   }
 
-  return <>
-    <h4>Credits: {credits} / {creditsMin} - {creditsMax}</h4>
-    <Table className="table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Code</th>
-          <th scope="col">Name</th>
-          <th scope="col">Credits</th>
-          {editMode && <th scope="col"></th>}
-        </tr>
-      </thead>
-      <tbody>
-        {spCourses.map(spCourse =>
-          <StudyPlanRow key={spCourse}
-            course={courses.find(c => c.code === spCourse)}
-            editMode={editMode}
-            canRemove={() => canRemoveCourse(spCourse, studyPlan, courses)}
-            removeCourse={() => removeCourse(spCourse)}
-          />
-        )}
-      </tbody>
-      <tfoot>
-        <tr><td colSpan={editMode ? 4 : 3}>
-          {editMode ?
-            <>
-              <Button onClick={() => setEditMode(false)} >Cancel</Button>
-              <Button disabled={!canSubmit(studyPlan, courses)} onClick={submitStudyPlan}>
-                Submit
-              </Button>
-            </> :
-            <>
-              <Button onClick={() => setEditMode(true)} >Edit</Button>
-              <Button onClick={flushStudyPlan}>Delete</Button>
-            </>
-          }
-        </td></tr>
-      </tfoot>
-    </Table>
-  </>
+  return <Table className="table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Code</th>
+        <th scope="col">Name</th>
+        <th scope="col">Credits</th>
+        {editMode && <th scope="col"></th>}
+      </tr>
+    </thead>
+    <tbody>
+      {spCourses.map(spCourse =>
+        <StudyPlanRow key={spCourse}
+          course={courses.find(c => c.code === spCourse)}
+          editMode={editMode}
+          canRemove={() => canRemoveCourse(spCourse, studyPlan, courses)}
+          removeCourse={() => removeCourse(spCourse)}
+        />
+      )}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td><strong>Total credits</strong> / min-max credits</td>
+        <td><strong>{credits}</strong> / {creditsMin}-{creditsMax}</td>
+        {editMode && <td></td>}
+      </tr>
+      <tr><td colSpan={editMode ? 4 : 3}>
+        {editMode ?
+          <>
+            <Button onClick={() => setEditMode(false)} >Cancel</Button>
+            <Button disabled={!canSubmit(studyPlan, courses)} onClick={submitStudyPlan}>
+              Submit
+            </Button>
+          </> :
+          <>
+            <Button onClick={() => setEditMode(true)} >Edit</Button>
+            <Button onClick={flushStudyPlan}>Delete</Button>
+          </>
+        }
+      </td></tr>
+    </tfoot>
+  </Table>
 }
 
 function StudyPlanRow(props) {
-  const { course, canRemove, removeCourse } = props;
+  const { course, canRemove, removeCourse, editMode } = props;
+  const [canRem, canRemReason] = editMode ? canRemove() : [undefined, undefined];
+
   return <tr>
     <td>{course.code}</td>
     <td>{course.name}</td>
     <td>{course.credits}</td>
-    {props.editMode && <td>
-      <Button className="btn-danger" onClick={removeCourse} disabled={!canRemove()}>
+    {editMode && <td> {canRem ?
+      <Button className="btn-danger" onClick={removeCourse}>
         <i className="bi bi-trash"></i>
-      </Button>
-    </td>}
-  </tr>
+      </Button> :
+      <OverlayTrigger overlay={<Tooltip id={`tooltip-add-${course.code}`}>{canRemReason}</Tooltip>}>
+        <span className="d-inline-block">
+          <Button className="btn-danger" disabled={true}>
+            <i className="bi bi-trash"></i>
+          </Button>
+        </span>
+      </OverlayTrigger>
+    }</td>
+    }
+  </tr >
 }
 
 function CreateStudyPlanForm(props) {
