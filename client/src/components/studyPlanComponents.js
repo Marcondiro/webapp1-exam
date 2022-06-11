@@ -66,23 +66,29 @@ function StudyPlanTable(props) {
       <tr><td colSpan={editMode ? 4 : 3}>
         {editMode ?
           <div className="d-flex justify-content-between">
-            <Button className="btn-secondary" onClick={() => setEditMode(false)} >Cancel</Button>
+            <Button className="btn-secondary" onClick={() => setEditMode(false)} >
+              <i className="bi bi-x-circle-fill"></i> Cancel
+            </Button>
             {canSubmit(studyPlan, courses) ?
               <Button onClick={submitStudyPlan}>
-                Submit
+                <i className="bi bi-check-circle-fill"></i> Submit
               </Button> :
               <OverlayTrigger overlay={<Tooltip id={`tooltip-submit`}>Total credits below minimum</Tooltip>}>
                 <span className="d-inline-block">
                   <Button disabled={true}>
-                    Submit
+                    <i className="bi bi-check-circle-fill"></i> Submit
                   </Button>
                 </span>
               </OverlayTrigger>
             }
           </div> :
           <div className="d-flex justify-content-between">
-            <Button className="btn-danger" onClick={flushStudyPlan}>Delete</Button>
-            <Button onClick={() => setEditMode(true)} >Edit</Button>
+            <Button className="btn-danger" onClick={flushStudyPlan}>
+              <i className="bi bi-trash"></i> Delete
+            </Button>
+            <Button onClick={() => setEditMode(true)}>
+              <i className="bi bi-pencil-square"></i> Edit
+            </Button>
           </div>
         }
       </td></tr>

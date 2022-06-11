@@ -8,7 +8,7 @@
 - [x] nome utente
 - [x] spazio tra buttons
 - [ ] TODOs
-- [ ] aggiungere titolo a part time full time
+- [x] aggiungere titolo a part time full time
 - [x] credits nel footer
 - [x] incompatibile course non courses quando un solo corso
 - [ ] part time selector padding
