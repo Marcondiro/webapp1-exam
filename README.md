@@ -20,16 +20,34 @@ TODO
     **Sample response:** 200 OK
     ```
     [
-        {
-            "code": "02GOLOV",
-            "name": "Architetture dei sistemi di elaborazione",
-            "credits": 12,
-            "students": 2,
-            "maxStudents": 5,
-            "preparatoryCourse": null,
-            "incompatibleCourses": ['02LSEOV']
-        },
-        // TODO add other courses
+      {
+        "code":"02GOLOV",
+        "name":"Architetture dei sistemi di elaborazione",
+        "credits":12,
+        "maxStudents":null,
+        "preparatoryCourse":null,
+        "students":1,
+        "incompatibleCourses":["02LSEOV"]
+      },
+      {
+        "code":"02LSEOV",
+        "name":"Computer architectures",
+        "credits":12,
+        "maxStudents":null,
+        "preparatoryCourse":null,
+        "students":0,
+        "incompatibleCourses":["02GOLOV"]
+      },
+      {
+        "code":"01TYDSM",
+        "name":"Cloud Computing",
+        "credits":6,
+        "maxStudents":1,
+        "preparatoryCourse":"01SQOOV",
+        "students":1,
+        "incompatibleCourses":[]
+      },
+      ...
     ]
     ```
     **Other responses:** 500 Internal Server Error

@@ -19,5 +19,4 @@
 - [ ] info animation
 - [x] redesign studyPlan as a class in frontend
 - [ ] redirect if unauthorized?
-- [ ] return objects instead of arrays in can*
-- [ ] add message to canSubmit
+- [x] add message to canSubmit

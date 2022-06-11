@@ -14,16 +14,13 @@ export default function StudyPlanNavbar(props) {
     }
   };
 
-  // TODO: fix col-4, on small screens cols are less than 12
   return <Navbar className="navbar-dark bg-primary">
     <Container fluid>
-      <div className="col-4 d-flex align-items-center">
+      <div className="d-flex align-items-center">
         <i className="bi bi-journal-bookmark-fill navbar-icon"></i>
+        <h1 className="main-title d-none d-md-inline">Fooniversity</h1>
       </div>
-      <div className="col-4 d-flex justify-content-center align-items-center">
-        <h1 className="d-none d-md-inline main-title">Fooniversity</h1>
-      </div>
-      <div className="col-4 d-flex justify-content-end align-items-center">
+      <div className="d-flex justify-content-end align-items-center">
         {props.user && <small className="welcome-text">Hi, {props.user.name}</small>}
         {props.logout ?
           <Button className="btn btn-light" onClick={logout}>

@@ -5,7 +5,7 @@ import StudyPlan from "../model/StudyPlan";
 function StudyPlanView(props) {
   const { studyPlan, setStudyPlan, setEditMode } = props;
 
-  return <Col>
+  return <Col className="col-12 col-md-6">
     <div>
       <h2>My study plan</h2>
       {studyPlan ?
@@ -19,10 +19,11 @@ function StudyPlanView(props) {
 function StudyPlanTable(props) {
   const { courses, setCourses, editMode, setEditMode, } = props;
   const { studyPlan, setStudyPlan, submitStudyPlan, flushStudyPlan, } = props;
-  const spCourses = studyPlan.courses;
-  const [minCredits, maxCredits] = [studyPlan.creditsRange.min, studyPlan.creditsRange.max];
+  
+  const [canSubmit, canSubitReason] = editMode ? studyPlan.canSubmit(courses) : [];
+
   const credits = courses
-    .filter(c => spCourses.includes(c.code))
+    .filter(c => studyPlan.courses.includes(c.code))
     .reduce((prev, cur) => prev + cur.credits, 0);
 
   const removeCourse = (courseCode) => {
@@ -42,7 +43,7 @@ function StudyPlanTable(props) {
       </tr>
     </thead>
     <tbody>
-      {spCourses.map(spCourse =>
+      {studyPlan.courses.map(spCourse =>
         <StudyPlanRow key={spCourse}
           course={courses.find(c => c.code === spCourse)}
           editMode={editMode}
@@ -55,7 +56,7 @@ function StudyPlanTable(props) {
       <tr>
         <td></td>
         <td><strong>Total credits</strong> / min-max credits</td>
-        <td><strong>{credits}</strong> / {minCredits}-{maxCredits}</td>
+        <td><strong>{credits}</strong> / {studyPlan.creditsRange.min}-{studyPlan.creditsRange.max}</td>
         {editMode && <td></td>}
       </tr>
       <tr><td colSpan={editMode ? 4 : 3}>
@@ -64,11 +65,11 @@ function StudyPlanTable(props) {
             <Button className="btn-secondary" onClick={() => setEditMode(false)} >
               <i className="bi bi-x-circle-fill"></i> Cancel
             </Button>
-            {studyPlan.canSubmit(courses) ?
+            {canSubmit ?
               <Button onClick={submitStudyPlan}>
                 <i className="bi bi-check-circle-fill"></i> Submit
               </Button> :
-              <OverlayTrigger overlay={<Tooltip id={`tooltip-submit`}>Total credits below minimum</Tooltip>}>
+              <OverlayTrigger overlay={<Tooltip id={`tooltip-submit`}>{canSubitReason}</Tooltip>}>
                 <span className="d-inline-block">
                   <Button disabled={true}>
                     <i className="bi bi-check-circle-fill"></i> Submit
@@ -93,7 +94,7 @@ function StudyPlanTable(props) {
 
 function StudyPlanRow(props) {
   const { course, canRemove, removeCourse, editMode } = props;
-  const [canRem, canRemReason] = editMode ? canRemove() : [undefined, undefined];
+  const [canRem, canRemReason] = editMode ? canRemove() : [];
 
   return <tr>
     <td>{course.code}</td>

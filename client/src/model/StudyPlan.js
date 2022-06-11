@@ -49,7 +49,7 @@ export default class StudyPlan {
       return [false, 'Incompatible with choosen courses'];
     }
 
-    return [true, null];
+    return [true];
   };
 
   canRemoveCourse(courseCode, courses) {
@@ -61,7 +61,7 @@ export default class StudyPlan {
       return [false, `This is a preparatory course for ${requirerCourse.code} ${requirerCourse.name}`];
     }
 
-    return [true, null];
+    return [true];
   };
 
   canSubmit(courses) {
@@ -70,8 +70,8 @@ export default class StudyPlan {
     //Check total credits
     const credits = spCourses.reduce((prev, cur) => prev + cur.credits, 0);
     if (credits < this.creditsRange.min || credits > this.creditsRange.max)
-      return false;
+      return [false, 'Total credits below minimum'];
 
-    return true;
+    return [true];
   };
 };
