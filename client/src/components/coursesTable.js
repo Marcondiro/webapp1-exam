@@ -11,7 +11,7 @@ export default function CoursesTable(props) {
     })
   }
 
-  return <div className="table-responsive"><Table className="table-hover">
+  return <Table className="table-hover">
     <thead>
       <tr>
         <th></th>
@@ -32,7 +32,7 @@ export default function CoursesTable(props) {
         />
       )}
     </tbody>
-  </Table></div>
+  </Table>
 }
 
 function CourseRow(props) {

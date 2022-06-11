@@ -6,8 +6,9 @@ export default function LoginPage(props) {
   return (
     <div className="auth-wrapper">
       <div className="auth-inner">
-        <h3><i className="bi bi-journal-bookmark-fill"></i></h3>
-        <h3>Fooniversity</h3>
+        <h3 className='login-description'><i className="bi bi-journal-bookmark-fill"></i></h3>
+        <h3 className='login-description'>Fooniversity</h3>
+        <h5 className='login-description'>Study plan</h5>
         <h2>Login</h2>
         <LoginForm {...props} />
       </div>

@@ -2,17 +2,13 @@
   box-sizing: border-box;
 }
 
-body {
-  min-height: 100vh;
-}
-
 body,
 html,
 .App,
 #root,
 .auth-wrapper {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 .auth-wrapper {
@@ -33,7 +29,7 @@ html,
   transition: all .3s;
 }
 
-h3 {
+.login-description {
   text-align: center;
 }
 
@@ -68,6 +64,23 @@ button.unstyled {
   color: red;
 }
 
-.table-responsive {
-  max-height:90%;
+div.App {
+  max-height: 100vh;
+}
+
+div {
+  overflow-y: auto;
+}
+
+.main-row {
+  height: calc(100vh - 72px);
+}
+
+header.app-header {
+  height: 72px;
+}
+
+div.row,
+div.col {
+  max-height: 100%;
 }

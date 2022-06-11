@@ -6,17 +6,14 @@ import CoursesTable from './coursesTable';
 
 function MainPage(props) {
   return <>
-    <header className="App-header sticky-top">
+    <header className="app-header">
       <StudyPlanNavbar logout={props.logout} user={props.user} />
     </header>
     <main>
       <Container fluid={true}>
-        <Row>
-          <Col><h2>Courses</h2></Col>
-          {props.user && <Col><h2>My study plan</h2></Col>}
-        </Row>
-        <Row>
+        <Row className='main-row'>
           <Col>
+            <h2>Courses</h2>
             <CoursesTable {...props} logout={undefined} />
           </Col>
           <Outlet />

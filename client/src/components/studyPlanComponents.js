@@ -6,6 +6,7 @@ function StudyPlan(props) {
   const { studyPlan, setStudyPlan, setEditMode } = props;
 
   return <Col>
+    <h2>My study plan</h2>
     {studyPlan ?
       <StudyPlanTable {...props} /> :
       <CreateStudyPlanForm setStudyPlan={setStudyPlan} setEditMode={setEditMode} />
