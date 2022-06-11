@@ -31,7 +31,7 @@ function StudyPlanTable(props) {
     });
   }
 
-  return <Table className="table-hover">
+  return <Table>
     <thead>
       <tr>
         <th scope="col">Code</th>

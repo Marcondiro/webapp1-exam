@@ -1,10 +1,10 @@
-- [ ] add column for max students?
-- [ ] incompat/ preparatory show course name, use a list?
-- [ ] display the reason of disabled add anc delete button
+- [x] add column for max students? no
+- [x] incompat/ preparatory show course name, use a list?
+- [x] display the reason of disabled add and delete button
 - [ ] meet database entries requirements
 - [ ] readme
 - [ ] final test undex linux
-- [ ] corso al completo rosso numero studenti
+- [x] corso al completo rosso numero studenti
 - [x] nome utente
 - [ ] spazio tra tasti
 - [ ] TODOs

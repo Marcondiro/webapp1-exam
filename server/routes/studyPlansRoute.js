@@ -37,7 +37,7 @@ router.post('',
 
     try {
       await validateCourses(req.body.courses);
-      await validateStudyPlan(req.body.isPartTime, req.body.courses);
+      await validateStudyPlan(req.user, req.body.isPartTime, req.body.courses);
     } catch (err) {
       return res.status(422).json({ error: err.toString() });
     }
@@ -69,7 +69,7 @@ router.put('/:studentId(\\d+)',
 
     try {
       await validateCourses(req.body.courses);
-      await validateStudyPlan(req.body.isPartTime, req.body.courses);
+      await validateStudyPlan(req.user, req.body.isPartTime, req.body.courses);
     } catch (err) {
       return res.status(422).json({ error: err.toString() });
     }

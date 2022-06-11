@@ -11,14 +11,14 @@ export default function CoursesTable(props) {
     })
   }
 
-  return <Table className="table-hover">
+  return <Table>
     <thead>
       <tr>
         <th></th>
         <th scope="col">Code</th>
         <th scope="col">Name</th>
         <th scope="col">Credits</th>
-        <th scope="col">Enrolled students</th>
+        <th scope="col">Enrolled / Max students</th>
         {props.editMode && <th></th>}
       </tr>
     </thead>
@@ -42,7 +42,7 @@ export default function CoursesTable(props) {
 function CourseRow(props) {
   const [expanded, setExpanded] = useState(false);
   const { course, editMode, addCourseToSP, canAddCourse } = props;
-  const [canAdd, canAddReason] = editMode ? canAddCourse(course): [null, null];
+  const [canAdd, canAddReason] = editMode ? canAddCourse(course) : [null, null];
 
   return <>
     <tr className={expanded ? 'course-expanded' : ''}>
@@ -59,7 +59,9 @@ function CourseRow(props) {
       <th scope="row">{course.code}</th>
       <td>{course.name}</td>
       <td>{course.credits}</td>
-      <td>{course.students}{course.maxStudents ? '/' + course.maxStudents : ''}</td>
+      <td className={course.maxStudents === course.students ? "full-course" : ""}>
+        {course.students}{course.maxStudents ? '/' + course.maxStudents : ''}
+      </td>
       {editMode && <td> {
         canAdd ?
           <Button onClick={() => addCourseToSP(course.code)}>

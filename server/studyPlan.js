@@ -1,9 +1,10 @@
 'use strict';
 
-const { getCourses } = require('./dao');
+const { getCourses, getStudyPlan } = require('./dao');
 
-async function validateStudyPlan(isPartTime, coursesCodes) {
+async function validateStudyPlan(student, isPartTime, coursesCodes) {
   const courses = (await getCourses()).filter(c => coursesCodes.includes(c.code));
+  const oldStudyPlan = await getStudyPlan(student);
 
   //Check total credits
   const creditsRange = {
@@ -32,9 +33,10 @@ async function validateStudyPlan(isPartTime, coursesCodes) {
   if (missingPreparatories.length > 0)
     throw new Error(`Preparatory course(s) ${missingPreparatories} is missing.`);
 
-  //Check max number of students
+  //Check max number of students excluding courses already in the study plan
   const fullCourses = courses
-    .filter(course => course.maxStudents === course.students);
+    .filter(course => !oldStudyPlan.courses.includes(course.code))
+    .filter(course => course.maxStudents === course.students)
   if (fullCourses.length > 0)
     throw new Error(`Course(s) ${fullCourses} is full.`);
 

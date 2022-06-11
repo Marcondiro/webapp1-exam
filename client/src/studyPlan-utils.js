@@ -42,13 +42,12 @@ function canAddCourse(course, studyPlan, courses) {
 }
 
 function canRemoveCourse(courseCode, studyPlan, courses) {
-  const preparatories = courses
-    .filter(c => studyPlan.courses.includes(c.code))
-    .map(c => c.preparatoryCourse);
+  const spCourses = courses.filter(c => studyPlan.courses.includes(c.code))
 
   //Check preparatory courses
-  if (preparatories.includes(courseCode)) {
-    return [false, 'This is a preparatory course for another one'];
+  const requirerCourse = spCourses.find(p => p.preparatoryCourse === courseCode)
+  if (requirerCourse) {
+    return [false, `This is a preparatory course for ${requirerCourse.code}`];
   }
 
   return [true, null];
