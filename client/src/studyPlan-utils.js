@@ -30,7 +30,10 @@ function canAddCourse(course, studyPlan, courses) {
 
   //Check preparatory courses
   if (course.preparatoryCourse && !studyPlan.courses.includes(course.preparatoryCourse.code)) {
-    return [false, `Missing preparatory course ${course.preparatoryCourse.code}`];
+    return [
+      false,
+      `Missing preparatory course ${course.preparatoryCourse.code} ${course.preparatoryCourse.name}`
+    ];
   }
 
   //Check max number of students
@@ -47,7 +50,7 @@ function canRemoveCourse(courseCode, studyPlan, courses) {
   //Check preparatory courses
   const requirerCourse = spCourses.find(p => p.preparatoryCourse === courseCode)
   if (requirerCourse) {
-    return [false, `This is a preparatory course for ${requirerCourse.code}`];
+    return [false, `This is a preparatory course for ${requirerCourse.code} ${requirerCourse.name}`];
   }
 
   return [true, null];

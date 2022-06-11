@@ -6,13 +6,14 @@
 - [ ] final test undex linux
 - [x] corso al completo rosso numero studenti
 - [x] nome utente
-- [ ] spazio tra tasti
+- [x] spazio tra buttons
 - [ ] TODOs
 - [ ] aggiungere titolo a part time full time
 - [x] credits nel footer
 - [x] incompatibile course non courses quando un solo corso
 - [ ] part time selector padding
-- [ ] tooltip submit
+- [x] tooltip submit
 - [x] verificare has study plan
 - [x] verificare canAdd
-- [ ] ricaricare courses dopo submit?
+- [x] ricaricare courses dopo submit/delete
+- [ ] info animation

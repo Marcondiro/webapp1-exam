@@ -28,10 +28,6 @@ function App() {
         await createStudyPlan(studyPlan);
       }
       setEditMode(false);
-
-      const courses = await getCourses();
-      setCourses(courses);
-      
     } catch (err) {
       // TODO show error message
     }
@@ -42,6 +38,9 @@ function App() {
       await deleteStudyPlan(user);
       setHasStudyPlan(false);
       setStudyPlan(null);
+
+      const courses = await getCourses();
+      setCourses(courses);
     } catch (err) {
       // TODO show error message
     }
@@ -57,7 +56,7 @@ function App() {
       }
     };
     getAndSetCourses();
-  }, [setCourses]);
+  }, [editMode, setCourses]);
 
   useEffect(() => {
     async function getAndSetStudyPlan() {
@@ -80,7 +79,7 @@ function App() {
         <Route path="/" element={<MainPage
           logout={user ? () => logout(user) : undefined}
           user={user}
-          courses={courses}
+          courses={courses} setCourses={setCourses}
           editMode={editMode}
           setStudyPlan={setStudyPlan}
           canAddCourse={(course) => canAddCourse(course, studyPlan, courses)}
@@ -92,7 +91,7 @@ function App() {
                 studyPlan={studyPlan} setStudyPlan={setStudyPlan}
                 submitStudyPlan={submitStudyPlan} flushStudyPlan={flushStudyPlan}
                 editMode={editMode} setEditMode={setEditMode}
-                courses={courses} /> :
+                courses={courses} setCourses={setCourses}/> :
               <Navigate to='/login' />
             } />
           <Route index element={<Navigate to='/courses' />} />

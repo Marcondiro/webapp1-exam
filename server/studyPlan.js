@@ -35,7 +35,7 @@ async function validateStudyPlan(student, isPartTime, coursesCodes) {
 
   //Check max number of students excluding courses already in the study plan
   const fullCourses = courses
-    .filter(course => !oldStudyPlan.courses.includes(course.code))
+    .filter(course => !oldStudyPlan || !oldStudyPlan.courses.includes(course.code))
     .filter(course => course.maxStudents === course.students)
   if (fullCourses.length > 0)
     throw new Error(`Course(s) ${fullCourses} is full.`);

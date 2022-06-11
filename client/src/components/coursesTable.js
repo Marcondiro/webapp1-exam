@@ -9,6 +9,9 @@ export default function CoursesTable(props) {
         courses: [...sp.courses, courseCode],
       }
     })
+    props.setCourses(courses =>
+      courses.map(c => c.code === courseCode ? { ...c, students: c.students + 1 } : c)
+    )
   }
 
   return <Table>

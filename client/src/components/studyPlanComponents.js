@@ -6,16 +6,19 @@ function StudyPlan(props) {
   const { studyPlan, setStudyPlan, setEditMode } = props;
 
   return <Col>
-    <h2>My study plan</h2>
-    {studyPlan ?
-      <StudyPlanTable {...props} /> :
-      <CreateStudyPlanForm setStudyPlan={setStudyPlan} setEditMode={setEditMode} />
-    }
+    <div>
+      <h2>My study plan</h2>
+      {studyPlan ?
+        <StudyPlanTable {...props} /> :
+        <CreateStudyPlanForm setStudyPlan={setStudyPlan} setEditMode={setEditMode} />
+      }
+    </div>
   </Col>
 }
 
 function StudyPlanTable(props) {
-  const { courses, editMode, setEditMode, studyPlan, setStudyPlan, submitStudyPlan, flushStudyPlan } = props;
+  const { courses, setCourses, editMode, setEditMode, } = props;
+  const { studyPlan, setStudyPlan, submitStudyPlan, flushStudyPlan, } = props;
   const spCourses = studyPlan.courses;
   const { creditsMin, creditsMax } = creditsRange(studyPlan.isPartTime);
   const credits = courses
@@ -29,6 +32,9 @@ function StudyPlanTable(props) {
         courses: sp.courses.filter(c => c !== courseCode),
       }
     });
+    setCourses(courses =>
+      courses.map(c => c.code === courseCode ? { ...c, students: c.students - 1 } : c)
+    )
   }
 
   return <Table>
@@ -59,16 +65,25 @@ function StudyPlanTable(props) {
       </tr>
       <tr><td colSpan={editMode ? 4 : 3}>
         {editMode ?
-          <>
-            <Button onClick={() => setEditMode(false)} >Cancel</Button>
-            <Button disabled={!canSubmit(studyPlan, courses)} onClick={submitStudyPlan}>
-              Submit
-            </Button>
-          </> :
-          <>
+          <div className="d-flex justify-content-between">
+            <Button className="btn-secondary" onClick={() => setEditMode(false)} >Cancel</Button>
+            {canSubmit(studyPlan, courses) ?
+              <Button onClick={submitStudyPlan}>
+                Submit
+              </Button> :
+              <OverlayTrigger overlay={<Tooltip id={`tooltip-submit`}>Total credits below minimum</Tooltip>}>
+                <span className="d-inline-block">
+                  <Button disabled={true}>
+                    Submit
+                  </Button>
+                </span>
+              </OverlayTrigger>
+            }
+          </div> :
+          <div className="d-flex justify-content-between">
+            <Button className="btn-danger" onClick={flushStudyPlan}>Delete</Button>
             <Button onClick={() => setEditMode(true)} >Edit</Button>
-            <Button onClick={flushStudyPlan}>Delete</Button>
-          </>
+          </div>
         }
       </td></tr>
     </tfoot>
@@ -87,7 +102,7 @@ function StudyPlanRow(props) {
       <Button className="btn-danger" onClick={removeCourse}>
         <i className="bi bi-trash"></i>
       </Button> :
-      <OverlayTrigger overlay={<Tooltip id={`tooltip-add-${course.code}`}>{canRemReason}</Tooltip>}>
+      <OverlayTrigger overlay={<Tooltip id={`tooltip-remove-${course.code}`}>{canRemReason}</Tooltip>}>
         <span className="d-inline-block">
           <Button className="btn-danger" disabled={true}>
             <i className="bi bi-trash"></i>
@@ -96,7 +111,7 @@ function StudyPlanRow(props) {
       </OverlayTrigger>
     }</td>
     }
-  </tr >
+  </tr>
 }
 
 function CreateStudyPlanForm(props) {
@@ -112,11 +127,12 @@ function CreateStudyPlanForm(props) {
   };
 
   return <Form onSubmit={submit}>
+    <h4>Choose the desired curricula</h4>
     <Form.Check type='radio' label='Part-time' id='part-time-radio'
       checked={isPartTime} onChange={() => setIsPartTime(true)} />
     <Form.Check type='radio' label='Full-time' id='full-time-radio'
       checked={!isPartTime} onChange={() => setIsPartTime(false)} />
-    <div className="d-grid">
+    <div>
       <Button type="submit" className="btn btn-primary">Next</Button>
     </div>
   </Form>
