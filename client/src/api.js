@@ -10,6 +10,8 @@ const login = async (credentials) => {
   if (response.ok) {
     const user = await response.json();
     return user;
+  } else if (response.status === 401) {
+    return null;
   } else {
     const errDetails = await response.text();
     throw errDetails;

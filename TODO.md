@@ -7,7 +7,7 @@
 - [x] mark full course in red
 - [x] add username
 - [x] buttons margins
-- [ ] TODOs
+- [x] Handle error messages
 - [x] add title in full-time part-time form
 - [x] move credits into footer
 - [x] change to incompatibile course (1) / incomaptible courses (>1)

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoginPage from './components/loginComponents';
-import { MainPage } from './components/mainPage';
+import { ErrorMessageModal, MainPage } from './components/mainPage';
 import { login, logout, getCourses, getStudyPlan, createStudyPlan, updateStudyPlan, deleteStudyPlan } from './api';
 import { StudyPlanView } from './components/studyPlanComponents';
 import StudyPlan from './model/StudyPlan';
@@ -17,8 +17,8 @@ function App() {
   const [studyPlan, setStudyPlan] = useState(null);
   //hasStudyPlan true if the user has a study plan saved in the back-end
   const [hasStudyPlan, setHasStudyPlan] = useState(false);
-  // TODO use context for edit mode?
   const [editMode, setEditMode] = useState(false);
+  const [error, setError] = useState('');
 
   const submitStudyPlan = async () => {
     try {
@@ -29,7 +29,8 @@ function App() {
       }
       setEditMode(false);
     } catch (err) {
-      // TODO show error message
+      console.error(err);
+      setError('An error occurred while trying to submit your study plan to the server, please retry.');
     }
   }
 
@@ -42,7 +43,8 @@ function App() {
       const courses = await getCourses();
       setCourses(courses);
     } catch (err) {
-      // TODO show error message
+      console.error(err);
+      setError('An error occurred while trying to delete your study plan from the server, please retry.');
     }
   }
 
@@ -51,8 +53,9 @@ function App() {
       try {
         const courses = await getCourses();
         setCourses(courses);
-      } catch (e) {
-        // TODO show error message
+      } catch (err) {
+        console.error(err);
+        setError('An error occurred while trying to retrieve courses from the server please retry.');
       }
     };
     getAndSetCourses();
@@ -62,10 +65,12 @@ function App() {
     async function getAndSetStudyPlan() {
       try {
         const studyPlan = await getStudyPlan(user);
-        setStudyPlan(new StudyPlan(studyPlan.isPartTime, studyPlan.courses));
+        if (studyPlan)
+          setStudyPlan(new StudyPlan(studyPlan.isPartTime, studyPlan.courses));
         setHasStudyPlan(Boolean(studyPlan));
-      } catch (e) {
-        // TODO show error message
+      } catch (err) {
+        console.error(err);
+        setError('An error occurred while trying to retrieve your study plan from the server please retry.');
       }
     };
     //Load study plan after login or after exiting edit mode
@@ -74,11 +79,11 @@ function App() {
   }, [user, editMode, setStudyPlan]);
 
   return <div className="App">
+    <ErrorMessageModal error={error} setError={setError} />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage
-          logout={user ? () => logout(user) : undefined}
-          user={user}
+          logout={user ? () => logout(user) : undefined} user={user}
           courses={courses} setCourses={setCourses}
           editMode={editMode}
           setStudyPlan={setStudyPlan}
@@ -91,12 +96,12 @@ function App() {
                 studyPlan={studyPlan} setStudyPlan={setStudyPlan}
                 submitStudyPlan={submitStudyPlan} flushStudyPlan={flushStudyPlan}
                 editMode={editMode} setEditMode={setEditMode}
-                courses={courses} setCourses={setCourses}/> :
+                courses={courses} setCourses={setCourses} /> :
               <Navigate to='/login' />
             } />
           <Route index element={<Navigate to='/courses' />} />
         </Route>
-        <Route path="login" element={<LoginPage setUser={setUser} login={login} />} />
+        <Route path="login" element={<LoginPage setUser={setUser} login={login} setError={setError} />} />
         <Route path="*" element={<Navigate to='/courses' />} />
       </Routes>
     </BrowserRouter>

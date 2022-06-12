@@ -1,7 +1,7 @@
 import StudyPlanNavbar from './studyPlanNavbar';
 
 import { Outlet } from 'react-router-dom';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Alert, Col, Container, Modal, Row } from 'react-bootstrap';
 import CoursesTable from './coursesTable';
 
 function MainPage(props) {
@@ -23,12 +23,21 @@ function MainPage(props) {
   </>
 }
 
-export { MainPage };
+function ErrorMessageModal(props) {
+  const handleClose = () => props.setError('');
 
-//className="col-md-9 col-12 below-nav"
+  return <Modal show={props.error} onHide={handleClose}>
+    <Modal.Header closeButton>
+      <Modal.Title>
+        <h2 className="text-danger">
+          <i className="bi bi-exclamation-triangle-fill"></i> Ops...
+        </h2>
+      </Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <Alert id='alert' variant='danger'>{props.error}</Alert>
+    </Modal.Body>
+  </Modal>
+}
 
-// {message && <Row>
-//     <div>
-//       <Alert id='alert' variant={message.type} onClose={() => setMessage('')} dismissible>{message.msg}</Alert>
-//     </div>
-//   </Row>}
+export { MainPage, ErrorMessageModal };

@@ -26,11 +26,15 @@ function LoginForm(props) {
     const credentials = { username, password };
     try {
       const user = await props.login(credentials);
-      props.setUser(user);
-      navigate(`/studyPlan/${user.id}`);
-    } catch (e) {
-      //TODO show error message
-      console.error(e);
+      if (user) {
+        props.setUser(user);
+        navigate(`/studyPlan/${user.id}`);
+      } else {
+        props.setError('Invalid credentials, please retry.');
+      }
+    } catch (err) {
+      console.error(err);
+      props.setError('An error occurred while trying to login, please retry.');
     }
   };
 
