@@ -2,7 +2,7 @@ import StudyPlanNavbar from './studyPlanNavbar';
 
 import { Outlet } from 'react-router-dom';
 import { Alert, Col, Container, Modal, Row } from 'react-bootstrap';
-import CoursesTable from './coursesTable';
+import CoursesTable from './coursesTableComponents';
 
 function MainPage(props) {
   return <>

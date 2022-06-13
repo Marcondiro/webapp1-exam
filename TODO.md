@@ -3,7 +3,7 @@
 - [x] display the reason of disabled add and delete button
 - [x] meet database entries requirements
 - [ ] readme
-- [ ] final test undex linux
+- [ ] final test on linux
 - [x] mark full course in red
 - [x] add username
 - [x] buttons margins
@@ -20,3 +20,4 @@
 - [x] redesign studyPlan as a class in frontend
 - [ ] redirect if unauthorized?
 - [x] add message to canSubmit
+- [ ] change style when cannot add a course

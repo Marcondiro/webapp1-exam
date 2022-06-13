@@ -44,7 +44,7 @@ function CourseRow(props) {
   const [canAdd, canAddReason] = editMode ? canAddCourse(course) : [null, null];
 
   return <>
-    <tr className={expanded ? 'course-expanded' : ''}>
+    <tr className={(expanded ? 'course-expanded' : '') + (editMode && !canAdd && ' table-active')}>
       <td>
         {(course.preparatoryCourse || course.incompatibleCourses.length > 0) &&
           <button className="unstyled" onClick={() => setExpanded(exp => !exp)}>
@@ -75,24 +75,30 @@ function CourseRow(props) {
           </OverlayTrigger>
       } </td>}
     </tr>
-    <tr className={expanded ? '' : 'collapse'}>
-      <td></td>
-      <td colSpan={editMode ? 5 : 4}>
-        {course.preparatoryCourse && <>
-          Preparatory course:
-          <ul>
-            <li><strong>{course.preparatoryCourse.code}</strong> {course.preparatoryCourse.name}</li>
-          </ul>
-        </>}
-        {course.incompatibleCourses.length > 0 && <>
-          Incompatible course{course.incompatibleCourses.length > 1 && 's'}:
-          <ul>
-            {course.incompatibleCourses.map(c =>
-              <li key={c.code}><strong>{c.code}</strong> {c.name}</li>
-            )}
-          </ul>
-        </>}
-      </td>
-    </tr>
+    {expanded && <CourseDetailsRow editMode={editMode} course={course} canAdd={canAdd}/>}
   </>
+}
+
+function CourseDetailsRow(props) {
+  const { editMode, course, canAdd } = props;
+
+  return <tr className={editMode && !canAdd ? ' table-active' : ''}>
+    <td></td>
+    <td colSpan={editMode ? 5 : 4}>
+      {course.preparatoryCourse && <>
+        Preparatory course:
+        <ul>
+          <li><strong>{course.preparatoryCourse.code}</strong> {course.preparatoryCourse.name}</li>
+        </ul>
+      </>}
+      {course.incompatibleCourses.length > 0 && <>
+        Incompatible course{course.incompatibleCourses.length > 1 && 's'}:
+        <ul>
+          {course.incompatibleCourses.map(c =>
+            <li key={c.code}><strong>{c.code}</strong> {c.name}</li>
+          )}
+        </ul>
+      </>}
+    </td>
+  </tr>
 }

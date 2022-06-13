@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoginPage from './components/loginComponents';
-import { ErrorMessageModal, MainPage } from './components/mainPage';
+import { ErrorMessageModal, MainPage } from './components/mainComponents';
 import { login, logout, getCourses, getStudyPlan, createStudyPlan, updateStudyPlan, deleteStudyPlan } from './api';
 import { StudyPlanView } from './components/studyPlanComponents';
 import StudyPlan from './model/StudyPlan';
@@ -15,8 +15,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [courses, setCourses] = useState([]);
   const [studyPlan, setStudyPlan] = useState(null);
-  //hasStudyPlan true if the user has a study plan saved in the back-end
-  const [hasStudyPlan, setHasStudyPlan] = useState(false);
+  const [hasStudyPlan, setHasStudyPlan] = useState(false); // true if the user has a study plan saved in the back-end
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState('');
 
@@ -58,6 +57,7 @@ function App() {
         setError('An error occurred while trying to retrieve courses from the server please retry.');
       }
     };
+    //Load courses at startup and when entering/exiting edit mode
     getAndSetCourses();
   }, [editMode, setCourses]);
 
@@ -82,26 +82,30 @@ function App() {
     <ErrorMessageModal error={error} setError={setError} />
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage
-          logout={user ? () => logout(user) : undefined} user={user}
-          courses={courses} setCourses={setCourses}
-          editMode={editMode}
-          setStudyPlan={setStudyPlan}
-          canAddCourse={(course) => studyPlan.canAddCourse(course, courses)}
-        />}>
+        <Route path="/" element={
+          <MainPage
+            logout={user ? () => logout(user) : undefined} user={user}
+            courses={courses} setCourses={setCourses}
+            editMode={editMode}
+            setStudyPlan={setStudyPlan}
+            canAddCourse={course => studyPlan.canAddCourse(course, courses)}
+          />}
+        >
           <Route path="courses" element={null} />
-          <Route path="studyPlan/:studentId"
-            element={user ?
-              <StudyPlanView
-                studyPlan={studyPlan} setStudyPlan={setStudyPlan}
-                submitStudyPlan={submitStudyPlan} flushStudyPlan={flushStudyPlan}
-                editMode={editMode} setEditMode={setEditMode}
-                courses={courses} setCourses={setCourses} /> :
-              <Navigate to='/login' />
-            } />
+          <Route path="studyPlan/:studentId" element={user ?
+            <StudyPlanView
+              studyPlan={studyPlan} setStudyPlan={setStudyPlan}
+              submitStudyPlan={submitStudyPlan} flushStudyPlan={flushStudyPlan}
+              editMode={editMode} setEditMode={setEditMode}
+              courses={courses} setCourses={setCourses}
+            /> :
+            <Navigate to='/login' />
+          } />
           <Route index element={<Navigate to='/courses' />} />
         </Route>
-        <Route path="login" element={<LoginPage setUser={setUser} login={login} setError={setError} />} />
+        <Route path="login" element={
+          <LoginPage setUser={setUser} login={login} setError={setError} />
+        } />
         <Route path="*" element={<Navigate to='/courses' />} />
       </Routes>
     </BrowserRouter>
