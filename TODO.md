@@ -20,4 +20,4 @@
 - [x] redesign studyPlan as a class in frontend
 - [ ] redirect if unauthorized?
 - [x] add message to canSubmit
-- [ ] change style when cannot add a course
+- [x] change style when cannot add a course

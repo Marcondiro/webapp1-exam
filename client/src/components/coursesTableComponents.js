@@ -75,7 +75,7 @@ function CourseRow(props) {
           </OverlayTrigger>
       } </td>}
     </tr>
-    {expanded && <CourseDetailsRow editMode={editMode} course={course} canAdd={canAdd}/>}
+    {expanded && <CourseDetailsRow editMode={editMode} course={course} canAdd={canAdd} />}
   </>
 }
 

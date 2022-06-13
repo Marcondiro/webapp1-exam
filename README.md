@@ -3,11 +3,9 @@
 
 ## React Client Application Routes
 
-TODO
-
-- Route `/`: page content and purpose
-- Route `/something/:param`: page content and purpose, param specification
-- ...
+- Route `/courses`: Shows a table containing all the courses offered by the university.
+- Route `/login` : Shows a form where the user can insert username and password to authenticate herself.
+- Route `/studyPlan/:studentId`: Shows a table containing all the courses offered by the university and allows the (authenticated) user to create, read, update, delete her study plan showing alternatively a form for the study plan part-time/full-time choice or a table for the editing of the courses of the study plan.
 
 ## API Server
 
@@ -54,7 +52,7 @@ TODO
 
 - GET `/api/v1/studyPlans/:studentId`
 
-    Get the study plan of the logged in user.
+    Get the study plan of the user.
 
     **Sample request:** get /api/v1/studyPlans/1
 
@@ -145,6 +143,8 @@ Perform the login.
 
 ## Main React Components
 
+TODO
+
 - `ListOfSomething` (in `List.js`): component purpose and main functionality
 - `GreatButton` (in `GreatButton.js`): component purpose and main functionality
 - ...
@@ -152,6 +152,8 @@ Perform the login.
 (only _main_ components, minor ones may be skipped)
 
 ## Screenshot
+
+TODO
 
 ![Screenshot](./img/screenshot.jpg)
 
