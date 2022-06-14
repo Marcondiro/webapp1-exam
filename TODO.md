@@ -21,3 +21,4 @@
 - [ ] redirect if unauthorized?
 - [x] add message to canSubmit
 - [x] change style when cannot add a course
+- [x] green button when course added

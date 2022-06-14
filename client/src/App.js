@@ -67,6 +67,8 @@ function App() {
         const studyPlan = await getStudyPlan(user);
         if (studyPlan)
           setStudyPlan(new StudyPlan(studyPlan.isPartTime, studyPlan.courses));
+        else
+          setStudyPlan(null);
         setHasStudyPlan(Boolean(studyPlan));
       } catch (err) {
         console.error(err);
@@ -89,6 +91,7 @@ function App() {
             editMode={editMode}
             setStudyPlan={setStudyPlan}
             canAddCourse={course => studyPlan.canAddCourse(course, courses)}
+            spIncludesCourse={courseCode => studyPlan.includesCourse(courseCode)}
           />}
         >
           <Route path="courses" element={null} />

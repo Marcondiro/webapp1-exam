@@ -14,9 +14,14 @@ export default class StudyPlan {
     }
   };
 
+  includesCourse(courseCode) {
+    return this.courses.includes(courseCode);
+  }
+
+  // returns [canAdd, cannotAddReason]
   canAddCourse(newCourse, courses) {
     //Check if newCourse is already present is SP
-    if (this.courses.includes(newCourse.code)) {
+    if (this.includesCourse(newCourse.code)) {
       return [false, 'Already in the study plan'];
     }
 
