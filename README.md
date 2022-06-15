@@ -159,9 +159,9 @@ TODO
 
 ## Users Credentials
 
-- s123456@studenti.polito.it, password
-- marco.cavenati@studenti.polito.it, 🤐
-- foo@bar.com, password
-- john.doe@polito.it, password
-- test@email.com, password
-- s000000@studenti.polito.it, password
+- s123456@studenti.polito.it, password, no study plan
+- marco.cavenati@studenti.polito.it, 🤐, full time study plan
+- foo@bar.com, password, no study plan
+- john.doe@polito.it, password, part time study plan
+- test@email.com, password, no study plan
+- s000000@studenti.polito.it, password, part time study plan
