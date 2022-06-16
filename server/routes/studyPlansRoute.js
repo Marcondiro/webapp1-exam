@@ -3,7 +3,7 @@
 const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 const { createStudyPlan, deleteStudyPlan, existsStudyPlan, getStudyPlan, updateStudyPlan, getCourses } = require('../dao');
-const validateStudyPlan = require('../studyPlan');
+const { validateStudyPlan } = require('../studyPlan');
 
 const router = Router();
 

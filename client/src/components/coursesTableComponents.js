@@ -18,7 +18,7 @@ export default function CoursesTable(props) {
         <th scope="col">Name</th>
         <th scope="col">Credits</th>
         <th scope="col">Enrolled / Max students</th>
-        {props.editMode && <th></th>}
+        {props.editMode && <th>Add</th>}
       </tr>
     </thead>
     <tbody>
@@ -42,8 +42,8 @@ export default function CoursesTable(props) {
 function CourseRow(props) {
   const [expanded, setExpanded] = useState(false);
   const { course, editMode, addCourseToSP, canAddCourse, spIncludesCourse } = props;
-  const [canAdd, canAddReason] = editMode ? canAddCourse(course) : [null, null];
-  const alreadyInSP = editMode && spIncludesCourse(course.code);
+
+  const [canAdd, canAddReason] = editMode ? canAddCourse(course) : [];
 
   return <>
     <tr className={(expanded ? 'course-expanded' : '') + ((editMode && !canAdd) ? ' table-active' : '')}>
@@ -63,22 +63,14 @@ function CourseRow(props) {
       <td className={course.maxStudents === course.students ? "full-course" : ""}>
         {course.students}{course.maxStudents ? '/' + course.maxStudents : ''}
       </td>
-      {editMode && <td> {
-        canAdd ?
-          <Button onClick={() => addCourseToSP(course.code)}>
-            <i className="bi bi-plus-circle"></i>
-          </Button> :
-          <OverlayTrigger overlay={<Tooltip id={`tooltip-add-${course.code}`}>{canAddReason}</Tooltip>}>
-            <span className="d-inline-block">
-              <Button disabled={true} className={alreadyInSP ? 'btn-success' : ''}>
-                {alreadyInSP ?
-                  <i className="bi bi-check-circle"></i> :
-                  <i className="bi bi-plus-circle"></i>
-                }
-              </Button>
-            </span>
-          </OverlayTrigger>
-      } </td>}
+      {editMode && <td>
+        <CourseRowButton
+          courseCode={course.code}
+          canAdd={canAdd} canAddReason={canAddReason}
+          spIncludesCourse={spIncludesCourse}
+          addCourseToSP={addCourseToSP}
+        />
+      </td>}
     </tr>
     {expanded && <CourseDetailsRow editMode={editMode} course={course} canAdd={canAdd} />}
   </>
@@ -106,4 +98,25 @@ function CourseDetailsRow(props) {
       </>}
     </td>
   </tr>
+}
+
+function CourseRowButton(props) {
+  const { courseCode, canAdd, canAddReason, spIncludesCourse, addCourseToSP } = props;
+
+  const alreadyInSP = spIncludesCourse(courseCode);
+
+  return canAdd ?
+    <Button onClick={() => addCourseToSP(courseCode)}>
+      <i className="bi bi-plus-circle"></i>
+    </Button> :
+    <OverlayTrigger overlay={<Tooltip id={`tooltip-add-${courseCode}`}>{canAddReason}</Tooltip>}>
+      <span className="d-inline-block">
+        <Button disabled={true} className={alreadyInSP ? 'btn-success' : ''}>
+          {alreadyInSP ?
+            <i className="bi bi-check-circle"></i> :
+            <i className="bi bi-plus-circle"></i>
+          }
+        </Button>
+      </span>
+    </OverlayTrigger>
 }

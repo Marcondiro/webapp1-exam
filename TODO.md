@@ -16,9 +16,7 @@
 - [x] fix has study plan
 - [x] fix canAdd
 - [x] reload courses after submit/delete
-- [ ] info animation
 - [x] redesign studyPlan as a class in frontend
-- [ ] redirect if unauthorized?
 - [x] add message to canSubmit
 - [x] change style when cannot add a course
 - [x] green button when course added

@@ -42,4 +42,4 @@ async function validateStudyPlan(student, isPartTime, coursesCodes) {
 
 }
 
-module.exports = validateStudyPlan;
+module.exports = { validateStudyPlan };

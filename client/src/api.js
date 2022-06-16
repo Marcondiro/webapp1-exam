@@ -23,7 +23,12 @@ const logout = async (user) => {
     method: 'DELETE',
     credentials: 'include',
   });
-  return Boolean(response.ok);
+  if (response.ok) {
+    return true;
+  } else {
+    const errDetails = await response.text();
+    throw errDetails;
+  }
 };
 
 const getCourses = async () => {

@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const { params, body, oneOf, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const cors = require('cors');
 const morgan = require('morgan');
 const passport = require('passport');

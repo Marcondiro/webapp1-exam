@@ -3,24 +3,21 @@ import { Button, Col, Form, OverlayTrigger, Table, Tooltip } from "react-bootstr
 import StudyPlan from "../model/StudyPlan";
 
 function StudyPlanView(props) {
-  const { studyPlan, setStudyPlan, setEditMode } = props;
-
   return <Col className="col-12 col-md-6">
     <div>
       <h2>My study plan</h2>
-      {studyPlan ?
+      {props.studyPlan ?
         <StudyPlanTable {...props} /> :
-        <CreateStudyPlanForm setStudyPlan={setStudyPlan} setEditMode={setEditMode} />
+        <CreateStudyPlanForm setStudyPlan={props.setStudyPlan} setEditMode={props.setEditMode} />
       }
     </div>
   </Col>
 }
 
 function StudyPlanTable(props) {
-  const { courses, setCourses, editMode, setEditMode, } = props;
+  const { courses, setCourses, } = props;
+  const { editMode, setEditMode, } = props;
   const { studyPlan, setStudyPlan, submitStudyPlan, flushStudyPlan, } = props;
-  
-  const [canSubmit, canSubitReason] = editMode ? studyPlan.canSubmit(courses) : [];
 
   const credits = courses
     .filter(c => studyPlan.courses.includes(c.code))
@@ -39,7 +36,7 @@ function StudyPlanTable(props) {
         <th scope="col">Code</th>
         <th scope="col">Name</th>
         <th scope="col">Credits</th>
-        {editMode && <th scope="col"></th>}
+        {editMode && <th scope="col">Remove</th>}
       </tr>
     </thead>
     <tbody>
@@ -59,37 +56,58 @@ function StudyPlanTable(props) {
         <td><strong>{credits}</strong> / {studyPlan.creditsRange.min}-{studyPlan.creditsRange.max}</td>
         {editMode && <td></td>}
       </tr>
-      <tr><td colSpan={editMode ? 4 : 3}>
-        {editMode ?
-          <div className="d-flex justify-content-between">
-            <Button className="btn-secondary" onClick={() => setEditMode(false)} >
-              <i className="bi bi-x-circle-fill"></i> Cancel
-            </Button>
-            {canSubmit ?
-              <Button onClick={submitStudyPlan}>
-                <i className="bi bi-check-circle-fill"></i> Submit
-              </Button> :
-              <OverlayTrigger overlay={<Tooltip id={`tooltip-submit`}>{canSubitReason}</Tooltip>}>
-                <span className="d-inline-block">
-                  <Button disabled={true}>
-                    <i className="bi bi-check-circle-fill"></i> Submit
-                  </Button>
-                </span>
-              </OverlayTrigger>
-            }
-          </div> :
-          <div className="d-flex justify-content-between">
-            <Button className="btn-danger" onClick={flushStudyPlan}>
-              <i className="bi bi-trash"></i> Delete
-            </Button>
-            <Button onClick={() => setEditMode(true)}>
-              <i className="bi bi-pencil-square"></i> Edit
-            </Button>
-          </div>
-        }
-      </td></tr>
+      <tr>
+        <td colSpan={editMode ? 4 : 3}>
+          {editMode ?
+            <StudyPlanFooterEditButtons
+              setEditMode={setEditMode}
+              courses={courses}
+              studyPlan={studyPlan}
+              submitStudyPlan={submitStudyPlan}
+            /> :
+            <StudyPlanFooterButtons flushStudyPlan={flushStudyPlan} setEditMode={setEditMode} />
+          }
+        </td>
+      </tr>
     </tfoot>
   </Table>
+}
+
+function StudyPlanFooterButtons(props) {
+  const { flushStudyPlan, setEditMode, } = props;
+
+  return <div className="d-flex justify-content-between">
+    <Button className="btn-danger" onClick={flushStudyPlan}>
+      <i className="bi bi-trash"></i> Delete
+    </Button>
+    <Button onClick={() => setEditMode(true)}>
+      <i className="bi bi-pencil-square"></i> Edit
+    </Button>
+  </div>
+}
+
+function StudyPlanFooterEditButtons(props) {
+  const { setEditMode, courses, studyPlan, submitStudyPlan } = props;
+
+  const [canSubmit, canSubmitReason] = studyPlan.canSubmit(courses);
+
+  return <div className="d-flex justify-content-between">
+    <Button className="btn-secondary" onClick={() => setEditMode(false)} >
+      <i className="bi bi-x-circle-fill"></i> Cancel
+    </Button>
+    {canSubmit ?
+      <Button onClick={submitStudyPlan}>
+        <i className="bi bi-check-circle-fill"></i> Submit
+      </Button> :
+      <OverlayTrigger overlay={<Tooltip id={`tooltip-submit`}>{canSubmitReason}</Tooltip>}>
+        <span className="d-inline-block">
+          <Button disabled={true}>
+            <i className="bi bi-check-circle-fill"></i> Submit
+          </Button>
+        </span>
+      </OverlayTrigger>
+    }
+  </div>
 }
 
 function StudyPlanRow(props) {
