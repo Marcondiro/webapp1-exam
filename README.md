@@ -109,7 +109,8 @@
     **Other responses:** 401 Unauthorized, 403 Forbidden, 500 Internal Server Error
 
 - POST `/api/v1/sessions`
-Perform the login.
+
+    Perform the login.
 
     **Sample request:** post /api/v1/sessions
     ```
@@ -120,8 +121,32 @@ Perform the login.
     ```
 
     **Sample response:** 201 Created
+    ```
+    {
+        "id":2,
+        "username":"marco.cavenati@studenti.polito.it",
+        "name":"Marco Cavenati"
+    }
+    ```
 
     **Other responses:** 401 Unauthorized, 422 Unprocessable Entity, 500 Internal Server Error
+
+- GET `/api/v1/sessions/current`
+
+    Get the currently logged in user.
+
+    **Sample request:** get /api/v1/sessions/current
+
+    **Sample response:** 200 OK
+    ```
+    {
+        "id":2,
+        "username":"marco.cavenati@studenti.polito.it",
+        "name":"Marco Cavenati"
+    }
+    ```
+
+    **Other responses:** 401 Unauthorized
 
 - DELETE `/api/v1/sessions/:studentId`
 

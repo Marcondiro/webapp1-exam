@@ -18,6 +18,19 @@ const login = async (credentials) => {
   }
 };
 
+const getUser = async () => {
+  const response = await fetch(APIURL + '/sessions/current', {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (response.ok) {
+    const user = await response.json();
+    return user;
+  } else {
+    return null;
+  }
+}
+
 const logout = async (user) => {
   const response = await fetch(APIURL + `/sessions/${user.id}`, {
     method: 'DELETE',
@@ -104,4 +117,4 @@ const deleteStudyPlan = async (user) => {
   }
 };
 
-export { login, logout, getCourses, getStudyPlan, createStudyPlan, updateStudyPlan, deleteStudyPlan };
+export { login, logout, getUser, getCourses, getStudyPlan, createStudyPlan, updateStudyPlan, deleteStudyPlan };

@@ -7,12 +7,12 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoginPage from './components/loginComponents';
 import { ErrorMessageModal, MainPage } from './components/mainComponents';
-import { login, logout, getCourses, getStudyPlan, createStudyPlan, updateStudyPlan, deleteStudyPlan } from './api';
+import { login, logout, getCourses, getStudyPlan, createStudyPlan, updateStudyPlan, deleteStudyPlan, getUser } from './api';
 import { StudyPlanView } from './components/studyPlanComponents';
 import StudyPlan from './model/StudyPlan';
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
   const [courses, setCourses] = useState([]);
   const [studyPlan, setStudyPlan] = useState(null);
   const [hasStudyPlan, setHasStudyPlan] = useState(false); // true if the user has a study plan saved in the back-end
@@ -46,6 +46,15 @@ function App() {
       setError('An error occurred while trying to delete your study plan from the server, please retry.');
     }
   }
+
+  useEffect(() => {
+    async function doIHaveAValidCookie() {
+      const user = await getUser();
+      setUser(user);
+    }
+    // check at first loading if already logged in and have a valid cookie
+    doIHaveAValidCookie();
+  }, [])
 
   useEffect(() => {
     async function getAndSetCourses() {
@@ -95,7 +104,7 @@ function App() {
           />}
         >
           <Route path="courses" element={null} />
-          <Route path="studyPlan/:studentId" element={user ?
+          <Route path="studyPlan/:studentId" element={user !== null ?
             <StudyPlanView
               studyPlan={studyPlan} setStudyPlan={setStudyPlan}
               submitStudyPlan={submitStudyPlan} flushStudyPlan={flushStudyPlan}

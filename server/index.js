@@ -79,6 +79,10 @@ sessionsRouter.post('',
     return res.status(201).json(req.user);
   });
 
+sessionsRouter.get('/current', isLoggedIn, function (req, res) {
+  return res.status(200).json(req.user);
+});
+
 sessionsRouter.delete('/:studentId(\\d+)', isLoggedIn, (req, res) => {
   try {
     if (req.user.id !== Number(req.params.studentId))
