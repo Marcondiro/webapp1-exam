@@ -54,7 +54,7 @@
 
     Get the study plan of the user.
 
-    **Sample request:** get /api/v1/studyPlans/1
+    **Sample request:** get /api/v1/studyPlans/1 (+ authentication header)
 
     **Sample response:** 200 OK
     ```
@@ -70,7 +70,7 @@
 
     Add a study plan for the logged in student.
 
-    **Sample request:** post /api/v1/studyPlans
+    **Sample request:** post /api/v1/studyPlans  (+ authentication header)
     ```
     {
         "isPartTime": true,
@@ -86,7 +86,7 @@
 
     Replace the study plan of the student.
 
-    **Sample request:** put /api/v1/studyPlans/1
+    **Sample request:** put /api/v1/studyPlans/1 (+ authentication header)
     ```
     {
         "isPartTime": false,
@@ -102,7 +102,7 @@
 
     Delete the study plan of the student.
 
-    **Sample request:** delete /api/v1/studyPlans/1
+    **Sample request:** delete /api/v1/studyPlans/1 (+ authentication header)
 
     **Sample response:** 204 No Content
 
@@ -135,7 +135,7 @@
 
     Get the currently logged in user.
 
-    **Sample request:** get /api/v1/sessions/current
+    **Sample request:** get /api/v1/sessions/current (+ authentication header)
 
     **Sample response:** 200 OK
     ```
@@ -152,7 +152,7 @@
 
     Perform the logout.
 
-    **Sample request:** delete /api/v1/sessions/1
+    **Sample request:** delete /api/v1/sessions/1 (+ authentication header)
 
     **Sample response:** 205 Reset Content
 
