@@ -104,7 +104,7 @@ function App() {
           />}
         >
           <Route path="courses" element={null} />
-          <Route path="studyPlan/:studentId" element={user !== null ?
+          <Route path="studyPlan" element={user !== null ?
             <StudyPlanView
               studyPlan={studyPlan} setStudyPlan={setStudyPlan}
               submitStudyPlan={submitStudyPlan} flushStudyPlan={flushStudyPlan}

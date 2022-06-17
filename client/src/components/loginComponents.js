@@ -28,7 +28,7 @@ function LoginForm(props) {
       const user = await props.login(credentials);
       if (user) {
         props.setUser(user);
-        navigate(`/studyPlan/${user.id}`);
+        navigate('/studyPlan');
       } else {
         props.setError('Invalid credentials, please retry.');
       }
