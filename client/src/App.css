@@ -84,3 +84,7 @@ header.app-header {
 div.col {
   max-height: 100%;
 }
+
+tr.table-active {
+  border-color: white;
+}

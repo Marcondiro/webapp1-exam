@@ -95,6 +95,7 @@ function App() {
       <Routes>
         <Route path="/" element={
           <MainPage
+            setError={setError}
             logout={user ? () => logout(user) : undefined} user={user}
             courses={courses} setCourses={setCourses}
             editMode={editMode}

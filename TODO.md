@@ -2,8 +2,6 @@
 - [x] incompat/ preparatory show course name, use a list?
 - [x] display the reason of disabled add and delete button
 - [x] meet database entries requirements
-- [ ] readme
-- [ ] final test on linux
 - [x] mark full course in red
 - [x] add username
 - [x] buttons margins
@@ -20,3 +18,5 @@
 - [x] add message to canSubmit
 - [x] change style when cannot add a course
 - [x] green button when course added
+- [ ] readme
+- [ ] final test on linux

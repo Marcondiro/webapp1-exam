@@ -17,7 +17,7 @@ export default function CoursesTable(props) {
         <th scope="col">Code</th>
         <th scope="col">Name</th>
         <th scope="col">Credits</th>
-        <th scope="col">Enrolled / Max students</th>
+        <th scope="col">Enrolled / Max* students</th>
         {props.editMode && <th>Add</th>}
       </tr>
     </thead>
@@ -36,6 +36,13 @@ export default function CoursesTable(props) {
         />
       )}
     </tbody>
+    <tfoot>
+      <tr>
+        <td colSpan={props.editMode ? 6 : 5}>
+          <span className="fw-light">* Unlimited number of students if not specified</span>
+        </td>
+      </tr>
+    </tfoot>
   </Table>
 }
 
@@ -111,10 +118,12 @@ function CourseRowButton(props) {
     </Button> :
     <OverlayTrigger overlay={<Tooltip id={`tooltip-add-${courseCode}`}>{canAddReason}</Tooltip>}>
       <span className="d-inline-block">
-        <Button disabled={true} className={alreadyInSP ? 'btn-success' : ''}>
-          {alreadyInSP ?
-            <i className="bi bi-check-circle"></i> :
-            <i className="bi bi-plus-circle"></i>
+        <Button disabled={true}
+          className={alreadyInSP ? 'btn-success' : canAdd ? 'btn-primary' : 'btn-danger'}>
+          {
+            alreadyInSP ? <i className="bi bi-check-circle"></i> :
+              canAdd ? <i className="bi bi-plus-circle"></i> :
+                <i className="bi bi-x-circle"></i>
           }
         </Button>
       </span>

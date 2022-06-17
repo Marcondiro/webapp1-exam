@@ -7,7 +7,7 @@ import CoursesTable from './coursesTableComponents';
 function MainPage(props) {
   return <>
     <header className="app-header">
-      <StudyPlanNavbar logout={props.logout} user={props.user} />
+      <StudyPlanNavbar logout={props.logout} user={props.user} setError={props.setError}/>
     </header>
     <main>
       <Container fluid={true}>

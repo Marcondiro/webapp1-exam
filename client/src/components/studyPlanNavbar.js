@@ -7,10 +7,11 @@ export default function StudyPlanNavbar(props) {
   const logout = async () => {
     try {
       await props.logout();
-    } finally {
       //After server logout flush state and go to un-auth courses view.
       //Use location replace instead of React useNavigate() to be sure that the full state is flushed.
       window.location.replace('/');
+    } catch (err) {
+      props.setError('An error occurred while trying to logout, please retry.');
     }
   };
 

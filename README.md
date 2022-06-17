@@ -5,7 +5,7 @@
 
 - Route `/courses`: Shows a table containing all the courses offered by the university.
 - Route `/login` : Shows a form where the user can insert username and password to authenticate herself.
-- Route `/studyPlan/:studentId`: Shows a table containing all the courses offered by the university and allows the (authenticated) user to create, read, update, delete her study plan showing alternatively a form for the study plan part-time/full-time choice or a table for the editing of the courses of the study plan.
+- Route `/studyPlan`: Shows a table containing all the courses offered by the university and allows the (authenticated) user to create, read, update, delete her study plan showing alternatively a form for the study plan part-time/full-time choice or a table for the editing of the courses of the study plan.
 
 ## API Server
 
@@ -163,7 +163,7 @@
 
 - Table `course` contains data about courses: `code, name, credits, maxStudents, preparatoryCourse`
 - Table `incompatibility` contains the incompatibilities between courses.
-- Table `student` contains data about the application users: `id, email, (password) hash, (password) salt, isPartTime, name`
+- Table `student` contains data about the application users and the study plan part-time or full-time option, if they have one: `id, email, (password) hash, (password) salt, isPartTime, name`
 - Table `studyPlan` contains the bindings between students and courses, in other words the study plan entries: `studentId, courseCode`
 
 ## Main React Components
@@ -178,15 +178,13 @@ TODO
 
 ## Screenshot
 
-TODO
-
-![Screenshot](./img/screenshot.jpg)
+![Screenshot](./img/screenshot.png)
 
 ## Users Credentials
 
-- s123456@studenti.polito.it, `password`, no study plan
 - marco.cavenati@studenti.polito.it, `🤐`, full time study plan
-- foo@bar.com, `password`, no study plan
 - john.doe@polito.it, `password`, part time study plan
-- test@email.com, `password`, no study plan
 - s000000@studenti.polito.it, `password`, part time study plan
+- foo@bar.com, `password`, no study plan
+- s123456@studenti.polito.it, `password`, no study plan
+- test@email.com, `password`, no study plan
