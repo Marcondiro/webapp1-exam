@@ -18,5 +18,5 @@
 - [x] add message to canSubmit
 - [x] change style when cannot add a course
 - [x] green button when course added
-- [ ] readme
+- [x] readme
 - [ ] final test on linux
