@@ -168,13 +168,18 @@
 
 ## Main React Components
 
-TODO
-
-- `ListOfSomething` (in `List.js`): component purpose and main functionality
-- `GreatButton` (in `GreatButton.js`): component purpose and main functionality
-- ...
-
-(only _main_ components, minor ones may be skipped)
+- `App` (in `App.js`): Holds and manage application state and define routes.
+- `MainPage` (in `components/mainComponents.js`): Container for navbar and tables, a graphic layout component.
+- `CoursesTable` (in `components/coursesTableComponents.js`): Table showing the courses
+- `CourseRow` (in `components/coursesTableComponents.js`): Entry of the `CoursesTable`, contains course info and, if in edit mode, a `CourseRowButton` to add the course to the studyPlan
+- `CourseDetails` (in `components/coursesTableComponents.js`): When a `CourseRow` is expanded, this table row is shown under the realtive `CourseRow`. It shows course's preparatory and incomplatible courses.
+- `LoginPage` (in `components/loginComponents.js`): Container for the login form, a graphic layout component.
+- `LoginForm` (in `components/loginComponents.js`): Login form with email and password textboxes and a login button.
+- `StudyPlanView` (in `components/studyPlanComponents.js`): Mainly a graphic layout component, shows alternatively a `CreateStudyPlanForm` or a `StudyPlanTable` if a study plan exists.
+- `StudyPlanTable` (in `components/studyPlanComponents.js`): Table showing the study plan, in the footer shows alternatively a button for deleteing the study plan and one for editing it (`StudyPlanFooterButtons`) or, if in edit mode, a button to submit the changes or cancel them (`StudyPlanFooterEditButtons`).
+- `StudyPlanRow` (in `components/studyPlanComponents.js`): Entry of the `StudyPlanTable`, contains course info and, if in edit mode, a button to remove the course from the studyPlan.
+- `CreateStudyPlanForm` (in `components/studyPlanComponents.js`): Allows the user to choose a part-time or full-time study plan.
+- `StudyPlanNavbar` (in `components/studyPlanNavbar.js`): Application navbar, contains a button for the login or logout.
 
 ## Screenshot
 
